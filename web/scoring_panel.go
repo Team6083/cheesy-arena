@@ -7,15 +7,15 @@ package web
 
 import (
 	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"strings"
+
 	"github.com/Team254/cheesy-arena/field"
 	"github.com/Team254/cheesy-arena/model"
 	"github.com/Team254/cheesy-arena/websocket"
 	"github.com/gorilla/mux"
-	"io"
-	"log"
-	"net/http"
-	"strconv"
-	"strings"
 )
 
 // Renders the scoring interface which enables input of scores in real-time.
@@ -106,20 +106,20 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 			}
 			web.arena.ScoringPanelRegistry.SetScoreCommitted(alliance, ws)
 			web.arena.ScoringStatusNotifier.Notify()
-		} else if number, err := strconv.Atoi(command); err == nil && number >= 1 && number <= 6 {
-			// Handle per-robot scoring fields.
-			if number <= 3 {
-				index := number - 1
-				score.TaxiStatuses[index] = !score.TaxiStatuses[index]
-				scoreChanged = true
-			} else {
-				index := number - 4
-				score.EndgameStatuses[index]++
-				if score.EndgameStatuses[index] == 5 {
-					score.EndgameStatuses[index] = 0
-				}
-				scoreChanged = true
-			}
+			// } else if number, err := strconv.Atoi(command); err == nil && number >= 1 && number <= 6 {
+			// 	// Handle per-robot scoring fields.
+			// 	if number <= 3 {
+			// 		index := number - 1
+			// 		score.TaxiStatuses[index] = !score.TaxiStatuses[index]
+			// 		scoreChanged = true
+			// 	} else {
+			// 		index := number - 4
+			// 		score.EndgameStatuses[index]++
+			// 		if score.EndgameStatuses[index] == 5 {
+			// 			score.EndgameStatuses[index] = 0
+			// 		}
+			// 		scoreChanged = true
+			// 	}
 		} else if !web.arena.Plc.IsEnabled() {
 			switch strings.ToUpper(command) {
 			case "Q":
