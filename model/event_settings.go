@@ -69,10 +69,10 @@ func (database *Database) GetEventSettings() (*EventSettings, error) {
 		PauseDurationSec:            game.MatchTiming.PauseDurationSec,
 		TeleopDurationSec:           game.MatchTiming.TeleopDurationSec,
 		WarningRemainingDurationSec: game.MatchTiming.WarningRemainingDurationSec,
-		QuintetThreshold:            game.QuintetThreshold,
-		CargoBonusRankingPointThresholdWithoutQuintet: game.CargoBonusRankingPointThresholdWithoutQuintet,
-		CargoBonusRankingPointThresholdWithQuintet:    game.CargoBonusRankingPointThresholdWithQuintet,
-		HangarBonusRankingPointThreshold:              game.HangarBonusRankingPointThreshold,
+		// QuintetThreshold:            game.QuintetThreshold,
+		// CargoBonusRankingPointThresholdWithoutQuintet: game.CargoBonusRankingPointThresholdWithoutQuintet,
+		// CargoBonusRankingPointThresholdWithQuintet:    game.CargoBonusRankingPointThresholdWithQuintet,
+		// HangarBonusRankingPointThreshold:              game.HangarBonusRankingPointThreshold,
 	}
 
 	if err := database.eventSettingsTable.create(&eventSettings); err != nil {
