@@ -69,13 +69,13 @@ func (rankings Rankings) Less(i, j int) bool {
 	// Use cross-multiplication to keep it in integer math.
 	if a.RankingPoints*b.Played == b.RankingPoints*a.Played {
 		if a.MatchPoints*b.Played == b.MatchPoints*a.Played {
-			if a.HangarPoints*b.Played == b.HangarPoints*a.Played {
-				if a.TaxiAndAutoCargoPoints*b.Played == b.TaxiAndAutoCargoPoints*a.Played {
-					return a.Random > b.Random
-				}
-				return a.TaxiAndAutoCargoPoints*b.Played > b.TaxiAndAutoCargoPoints*a.Played
-			}
-			return a.HangarPoints*b.Played > b.HangarPoints*a.Played
+			// if a.HangarPoints*b.Played == b.HangarPoints*a.Played {
+			// 	if a.TaxiAndAutoCargoPoints*b.Played == b.TaxiAndAutoCargoPoints*a.Played {
+			return a.Random > b.Random
+			// 	}
+			// 	return a.TaxiAndAutoCargoPoints*b.Played > b.TaxiAndAutoCargoPoints*a.Played
+			// }
+			// return a.HangarPoints*b.Played > b.HangarPoints*a.Played
 		}
 		return a.MatchPoints*b.Played > b.MatchPoints*a.Played
 	}
