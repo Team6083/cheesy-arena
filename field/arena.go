@@ -7,13 +7,14 @@ package field
 
 import (
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/Team254/cheesy-arena/game"
 	"github.com/Team254/cheesy-arena/model"
 	"github.com/Team254/cheesy-arena/network"
 	"github.com/Team254/cheesy-arena/partner"
 	"github.com/Team254/cheesy-arena/plc"
-	"log"
-	"time"
 )
 
 const (
@@ -164,10 +165,10 @@ func (arena *Arena) LoadSettings() error {
 	game.UpdateMatchSounds()
 	arena.MatchTimingNotifier.Notify()
 
-	game.QuintetThreshold = settings.QuintetThreshold
-	game.CargoBonusRankingPointThresholdWithoutQuintet = settings.CargoBonusRankingPointThresholdWithoutQuintet
-	game.CargoBonusRankingPointThresholdWithQuintet = settings.CargoBonusRankingPointThresholdWithQuintet
-	game.HangarBonusRankingPointThreshold = settings.HangarBonusRankingPointThreshold
+	// game.QuintetThreshold = settings.QuintetThreshold
+	// game.CargoBonusRankingPointThresholdWithoutQuintet = settings.CargoBonusRankingPointThresholdWithoutQuintet
+	// game.CargoBonusRankingPointThresholdWithQuintet = settings.CargoBonusRankingPointThresholdWithQuintet
+	// game.HangarBonusRankingPointThreshold = settings.HangarBonusRankingPointThreshold
 
 	return nil
 }
