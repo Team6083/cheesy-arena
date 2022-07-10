@@ -11,24 +11,15 @@
   <div class="scoring-section">
     <div class="scoring-header">
       <div>&nbsp;</div>
-      <div>Taxi</div>
-      <div>Endgame Status</div>
+      <div>Cube</div>
     </div>
-    {{range $i := seq 3}}
       <div>
-        <div id="team{{$i}}" class="team robot-field"></div>
-        <div id="taxiStatus{{$i}}" class="boolean robot-field" onclick="handleClick('{{$i}}');">
-          <div class="shortcut">{{$i}}</div>
-          <div class="value"></div>
-          <div class="shortcut"></div>
-        </div>
-        <div id="endgameStatus{{$i}}" class="endgame-status robot-field" onclick="handleClick('{{add $i 3}}');">
-          <div class="shortcut">{{add $i 3}}</div>
+        <div id="taxiStatus1" class="boolean robot-field" onclick="handleClick('1');">
+          <div class="shortcut">1</div>
           <div class="value"></div>
           <div class="shortcut"></div>
         </div>
       </div>
-    {{end}}
   </div>
   {{if not .PlcIsEnabled}}
     <div id="elements">
