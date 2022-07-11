@@ -8,13 +8,13 @@
 {{define "body"}}
 <div id="matchName">&nbsp;</div>
 <div id="alliance">
+  <div>&nbsp;</div>
   <div class="scoring-section">
     <div class="scoring-header">
-      <div>&nbsp;</div>
       <div>Cube</div>
     </div>
       <div>
-        <div id="taxiStatus1" class="boolean robot-field" onclick="handleClick('1');">
+        <div id="cube" class="boolean robot-field" onclick="handleClick('1');">
           <div class="shortcut">1</div>
           <div class="value"></div>
           <div class="shortcut"></div>
@@ -25,12 +25,12 @@
     <div id="elements">
       <div class="scoring-section">
         <div>
-          <div>&nbsp;</div>
+          <!-- <div>&nbsp;</div> -->
           <div class="goal-header">Golds</div>
           <div class="goal-header">Pearls</div>
         </div>
         <div>
-          <div class="goal-period">Teleop</div>
+          <!-- <div class="goal-period">Teleop</div> -->
           {{template "goal" dict "period" "teleop" "level" "Golds" "plus" "R" "minus" "E"}}
           {{template "goal" dict "period" "teleop" "level" "Pearls" "plus" "F" "minus" "D"}}
         </div>

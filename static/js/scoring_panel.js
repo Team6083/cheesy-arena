@@ -48,6 +48,11 @@ var handleRealtimeScore = function(data) {
   }
   var score = realtimeScore.Score;
 
+  $("#cube>.value").text(score.Cube ? "Yes" : "No");
+  $("#cube").attr("data-value", score.Cube);
+  $("#teleopCargoGolds").text(score.Golds);
+  $("#teleopCargoPearls").text(score.Pearls);
+
   for (var i = 0; i < 3; i++) {
     var i1 = i + 1;
     $("#taxiStatus" + i1 + ">.value").text(score.TaxiStatuses[i] ? "Yes" : "No");
