@@ -108,7 +108,7 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 			web.arena.ScoringPanelRegistry.SetScoreCommitted(alliance, ws)
 			web.arena.ScoringStatusNotifier.Notify()
 		} else if number, err := strconv.Atoi(command); err == nil && number == 1 {
-			score.Cube = true
+			score.Cube = !score.Cube
 			scoreChanged = true
 		} else if !web.arena.Plc.IsEnabled() {
 			switch strings.ToUpper(command) {
