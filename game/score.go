@@ -48,7 +48,7 @@ func (score *Score) Summarize(opponentFouls []Foul) *ScoreSummary {
 
 	// Calculate teleoperated period cargo points.
 	summary.CollectionCount = score.Golds + score.Pearls
-	summary.CollectionPoints = 5*score.Golds + 7*score.Pearls
+	summary.CollectionPoints = 5*score.Golds + 8*score.Pearls
 
 	// Calculate endgame points.
 	if score.Cube {
