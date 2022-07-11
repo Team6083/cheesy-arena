@@ -11,11 +11,12 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/Team254/cheesy-arena/game"
-	"github.com/Team254/cheesy-arena/model"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+
+	"github.com/Team254/cheesy-arena/game"
+	"github.com/Team254/cheesy-arena/model"
 )
 
 const (
@@ -544,41 +545,41 @@ func createTbaScoringBreakdown(match *model.Match, matchResult *model.MatchResul
 		opponentScoreSummary = matchResult.RedScoreSummary()
 	}
 
-	breakdown.TaxiRobot1 = taxiMapping[score.TaxiStatuses[0]]
-	breakdown.TaxiRobot2 = taxiMapping[score.TaxiStatuses[1]]
-	breakdown.TaxiRobot3 = taxiMapping[score.TaxiStatuses[2]]
-	breakdown.AutoCargoLowerBlue = score.AutoCargoLower[game.BlueQuadrant]
-	breakdown.AutoCargoLowerFar = score.AutoCargoLower[game.FarQuadrant]
-	breakdown.AutoCargoLowerNear = score.AutoCargoLower[game.NearQuadrant]
-	breakdown.AutoCargoLowerRed = score.AutoCargoLower[game.RedQuadrant]
-	breakdown.AutoCargoUpperBlue = score.AutoCargoUpper[game.BlueQuadrant]
-	breakdown.AutoCargoUpperFar = score.AutoCargoUpper[game.FarQuadrant]
-	breakdown.AutoCargoUpperNear = score.AutoCargoUpper[game.NearQuadrant]
-	breakdown.AutoCargoUpperRed = score.AutoCargoUpper[game.RedQuadrant]
-	breakdown.AutoCargoTotal = scoreSummary.AutoCargoCount
-	breakdown.TeleopCargoLowerBlue = score.TeleopCargoLower[game.BlueQuadrant]
-	breakdown.TeleopCargoLowerFar = score.TeleopCargoLower[game.FarQuadrant]
-	breakdown.TeleopCargoLowerNear = score.TeleopCargoLower[game.NearQuadrant]
-	breakdown.TeleopCargoLowerRed = score.TeleopCargoLower[game.RedQuadrant]
-	breakdown.TeleopCargoUpperBlue = score.TeleopCargoUpper[game.BlueQuadrant]
-	breakdown.TeleopCargoUpperFar = score.TeleopCargoUpper[game.FarQuadrant]
-	breakdown.TeleopCargoUpperNear = score.TeleopCargoUpper[game.NearQuadrant]
-	breakdown.TeleopCargoUpperRed = score.TeleopCargoUpper[game.RedQuadrant]
-	breakdown.TeleopCargoTotal = scoreSummary.CargoCount - scoreSummary.AutoCargoCount
-	breakdown.MatchCargoTotal = scoreSummary.CargoCount
-	breakdown.EndgameRobot1 = endgameMapping[score.EndgameStatuses[0]]
-	breakdown.EndgameRobot2 = endgameMapping[score.EndgameStatuses[1]]
-	breakdown.EndgameRobot3 = endgameMapping[score.EndgameStatuses[2]]
-	breakdown.AutoTaxiPoints = scoreSummary.TaxiPoints
-	breakdown.AutoCargoPoints = scoreSummary.AutoCargoPoints
-	breakdown.AutoPoints = scoreSummary.TaxiPoints + scoreSummary.AutoCargoPoints
-	breakdown.TeleopCargoPoints = scoreSummary.CargoPoints - scoreSummary.AutoCargoPoints
-	breakdown.EndgamePoints = scoreSummary.HangarPoints
-	breakdown.TeleopPoints = scoreSummary.CargoPoints - scoreSummary.AutoCargoPoints +
-		scoreSummary.HangarPoints
-	breakdown.QuintetAchieved = scoreSummary.QuintetAchieved
-	breakdown.CargoBonusRankingPoint = scoreSummary.CargoBonusRankingPoint
-	breakdown.HangarBonusRankingPoint = scoreSummary.HangarBonusRankingPoint
+	// breakdown.TaxiRobot1 = taxiMapping[score.TaxiStatuses[0]]
+	// breakdown.TaxiRobot2 = taxiMapping[score.TaxiStatuses[1]]
+	// breakdown.TaxiRobot3 = taxiMapping[score.TaxiStatuses[2]]
+	// breakdown.AutoCargoLowerBlue = score.AutoCargoLower[game.BlueQuadrant]
+	// breakdown.AutoCargoLowerFar = score.AutoCargoLower[game.FarQuadrant]
+	// breakdown.AutoCargoLowerNear = score.AutoCargoLower[game.NearQuadrant]
+	// breakdown.AutoCargoLowerRed = score.AutoCargoLower[game.RedQuadrant]
+	// breakdown.AutoCargoUpperBlue = score.AutoCargoUpper[game.BlueQuadrant]
+	// breakdown.AutoCargoUpperFar = score.AutoCargoUpper[game.FarQuadrant]
+	// breakdown.AutoCargoUpperNear = score.AutoCargoUpper[game.NearQuadrant]
+	// breakdown.AutoCargoUpperRed = score.AutoCargoUpper[game.RedQuadrant]
+	// breakdown.AutoCargoTotal = scoreSummary.AutoCargoCount
+	// breakdown.TeleopCargoLowerBlue = score.TeleopCargoLower[game.BlueQuadrant]
+	// breakdown.TeleopCargoLowerFar = score.TeleopCargoLower[game.FarQuadrant]
+	// breakdown.TeleopCargoLowerNear = score.TeleopCargoLower[game.NearQuadrant]
+	// breakdown.TeleopCargoLowerRed = score.TeleopCargoLower[game.RedQuadrant]
+	// breakdown.TeleopCargoUpperBlue = score.TeleopCargoUpper[game.BlueQuadrant]
+	// breakdown.TeleopCargoUpperFar = score.TeleopCargoUpper[game.FarQuadrant]
+	// breakdown.TeleopCargoUpperNear = score.TeleopCargoUpper[game.NearQuadrant]
+	// breakdown.TeleopCargoUpperRed = score.TeleopCargoUpper[game.RedQuadrant]
+	// breakdown.TeleopCargoTotal = scoreSummary.CargoCount - scoreSummary.AutoCargoCount
+	// breakdown.MatchCargoTotal = scoreSummary.CargoCount
+	// breakdown.EndgameRobot1 = endgameMapping[score.EndgameStatuses[0]]
+	// breakdown.EndgameRobot2 = endgameMapping[score.EndgameStatuses[1]]
+	// breakdown.EndgameRobot3 = endgameMapping[score.EndgameStatuses[2]]
+	// breakdown.AutoTaxiPoints = scoreSummary.TaxiPoints
+	// breakdown.AutoCargoPoints = scoreSummary.AutoCargoPoints
+	// breakdown.AutoPoints = scoreSummary.TaxiPoints + scoreSummary.AutoCargoPoints
+	// breakdown.TeleopCargoPoints = scoreSummary.CargoPoints - scoreSummary.AutoCargoPoints
+	// breakdown.EndgamePoints = scoreSummary.HangarPoints
+	// breakdown.TeleopPoints = scoreSummary.CargoPoints - scoreSummary.AutoCargoPoints +
+	// 	scoreSummary.HangarPoints
+	// breakdown.QuintetAchieved = scoreSummary.QuintetAchieved
+	// breakdown.CargoBonusRankingPoint = scoreSummary.CargoBonusRankingPoint
+	// breakdown.HangarBonusRankingPoint = scoreSummary.HangarBonusRankingPoint
 	for _, foul := range score.Fouls {
 		if foul.Rule() != nil && !foul.Rule().IsRankingPoint {
 			if foul.Rule().IsTechnical {
