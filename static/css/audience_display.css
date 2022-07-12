@@ -505,3 +505,14 @@ html {
   font-family: "FuturaLTBold";
   line-height: 87px;
 }
+
+/* Hide Red/Blue 1 and 3*/
+#leftTeam1Avatar, #leftTeam3Avatar, #rightTeam1Avatar, #rightTeam3Avatar,
+#leftTeam1, #leftTeam3, #rightTeam1, #rightTeam3 {
+  opacity: 0;
+}
+
+#leftFinalTeam1, #leftFinalTeam3, #rightFinalTeam1, #rightFinalTeam3,
+#leftFinalTeam1Avatar, #leftFinalTeam3Avatar, #rightFinalTeam1Avatar, #rightFinalTeam1Avatar {
+  opacity: 0;
+}
