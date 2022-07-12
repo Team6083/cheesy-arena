@@ -21,7 +21,7 @@ $("form").submit(function() {
   // Inject the JSON data into the form as hidden inputs.
   $("<input />").attr("type", "hidden").attr("name", "matchResultJson").attr("value", matchResultJson).appendTo("form");
 
-  return true;
+  // return true;
 });
 
 // Draws the match-editing form for one alliance based on the cached result data.
@@ -31,19 +31,23 @@ var renderResults = function(alliance) {
   $("#" + alliance + "Score").html(scoreContent);
 
   // Set the values of the form fields from the JSON results data.
-  for (var i = 0; i < 4; i++) {
-    var i1 = i + 1;
+  // for (var i = 0; i < 4; i++) {
+  //   var i1 = i + 1;
 
-    if (i < 3) {
-      getInputElement(alliance, "TaxiStatuses" + i1).prop("checked", result.score.TaxiStatuses[i]);
-      getInputElement(alliance, "EndgameStatuses" + i1, result.score.EndgameStatuses[i]).prop("checked", true);
-    }
+  //   if (i < 3) {
+  //     getInputElement(alliance, "TaxiStatuses" + i1).prop("checked", result.score.TaxiStatuses[i]);
+  //     getInputElement(alliance, "EndgameStatuses" + i1, result.score.EndgameStatuses[i]).prop("checked", true);
+  //   }
 
-    getInputElement(alliance, "AutoCargoLower" + i).val(result.score.AutoCargoLower[i]);
-    getInputElement(alliance, "AutoCargoUpper" + i).val(result.score.AutoCargoUpper[i]);
-    getInputElement(alliance, "TeleopCargoLower" + i).val(result.score.TeleopCargoLower[i]);
-    getInputElement(alliance, "TeleopCargoUpper" + i).val(result.score.TeleopCargoUpper[i]);
-  }
+  //   getInputElement(alliance, "AutoCargoLower" + i).val(result.score.AutoCargoLower[i]);
+  //   getInputElement(alliance, "AutoCargoUpper" + i).val(result.score.AutoCargoUpper[i]);
+  //   getInputElement(alliance, "TeleopCargoLower" + i).val(result.score.TeleopCargoLower[i]);
+  //   getInputElement(alliance, "TeleopCargoUpper" + i).val(result.score.TeleopCargoUpper[i]);
+  // }
+
+  getInputElement(alliance, "Golds").val(result.score.Golds)
+  getInputElement(alliance, "Pearls").val(result.score.Pearls)
+  getInputElement(alliance, "Cube").prop("checked", result.score.Cube)
 
   if (result.score.Fouls != null) {
     $.each(result.score.Fouls, function(k, v) {
@@ -68,25 +72,29 @@ var updateResults = function(alliance) {
     formData[v.name] = v.value;
   });
 
-  result.score.TaxiStatuses = [];
-  result.score.AutoCargoLower = [];
-  result.score.AutoCargoUpper = [];
-  result.score.TeleopCargoLower = [];
-  result.score.TeleopCargoUpper = [];
-  result.score.EndgameStatuses = [];
-  for (var i = 0; i < 4; i++) {
-    var i1 = i + 1;
+  // result.score.TaxiStatuses = [];
+  // result.score.AutoCargoLower = [];
+  // result.score.AutoCargoUpper = [];
+  // result.score.TeleopCargoLower = [];
+  // result.score.TeleopCargoUpper = [];
+  // result.score.EndgameStatuses = [];
+  // for (var i = 0; i < 4; i++) {
+  //   var i1 = i + 1;
 
-    if (i < 3) {
-      result.score.TaxiStatuses[i] = formData[alliance + "TaxiStatuses" + i1] === "on";
-      result.score.EndgameStatuses[i] = parseInt(formData[alliance + "EndgameStatuses" + i1]);
-    }
+  //   if (i < 3) {
+  //     result.score.TaxiStatuses[i] = formData[alliance + "TaxiStatuses" + i1] === "on";
+  //     result.score.EndgameStatuses[i] = parseInt(formData[alliance + "EndgameStatuses" + i1]);
+  //   }
 
-    result.score.AutoCargoLower[i] = parseInt(formData[alliance + "AutoCargoLower" + i]);
-    result.score.AutoCargoUpper[i] = parseInt(formData[alliance + "AutoCargoUpper" + i]);
-    result.score.TeleopCargoLower[i] = parseInt(formData[alliance + "TeleopCargoLower" + i]);
-    result.score.TeleopCargoUpper[i] = parseInt(formData[alliance + "TeleopCargoUpper" + i]);
-  }
+  //   result.score.AutoCargoLower[i] = parseInt(formData[alliance + "AutoCargoLower" + i]);
+  //   result.score.AutoCargoUpper[i] = parseInt(formData[alliance + "AutoCargoUpper" + i]);
+  //   result.score.TeleopCargoLower[i] = parseInt(formData[alliance + "TeleopCargoLower" + i]);
+  //   result.score.TeleopCargoUpper[i] = parseInt(formData[alliance + "TeleopCargoUpper" + i]);
+  // }
+
+  result.score.Golds = parseInt(formData[alliance + "Golds"]);
+  result.score.Golds = parseInt(formData[alliance + "Pearls"]);
+  result.score.Golds = parseInt(formData[alliance + "Cube"]);
 
   result.score.Fouls = [];
   for (var i = 0; formData[alliance + "Foul" + i + "Time"]; i++) {
