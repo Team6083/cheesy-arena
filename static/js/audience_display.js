@@ -21,14 +21,14 @@ var overlayCenteringBottomHideParams = {queue: false, bottom: $("#overlayCenteri
 var overlayCenteringBottomShowParams = {queue: false, bottom: "0px"};
 var overlayCenteringTopHideParams = {queue: false, top: overlayCenteringTopUp};
 var overlayCenteringTopShowParams = {queue: false, top: "50px"};
-var eventMatchInfoDown = "30px";
+var eventMatchInfoDown = "90px";
 var eventMatchInfoUp = $("#eventMatchInfo").css("height");
 var logoUp = "10px";
 var logoDown = $("#logo").css("top");
 var scoreIn = $(".score").css("width");
-var scoreMid = "135px";
-var scoreOut = "255px";
-var scoreFieldsOut = "40px";
+var scoreMid = "405px";
+var scoreOut = "765px";
+var scoreFieldsOut = "120px";
 
 // Handles a websocket message to change which screen is displayed.
 var handleAudienceDisplayMode = function(targetScreen) {

@@ -4,16 +4,16 @@
 */
 
 html {
-  cursor: none;
+  /*cursor: none;*/
   -webkit-user-select: none;
   -moz-user-select: none;
   overflow: hidden;
 }
 #overlayCentering {
   position: absolute;
-  bottom: -210px;
+  bottom: -800px;
   width: 100%;
-  height: 170px;
+  height: 710px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,11 +26,11 @@ html {
   font-size: 22px;
 }
 #matchOverlayTop {
-  height: 100px;
+  height: 300px;
   display: flex;
 }
 .teams {
-  width: 55px;
+  width: 165px;
   height: 100%;
   display: none;
   flex-direction: column;
@@ -38,8 +38,8 @@ html {
   align-items: center;
   background-color: #fff;
   font-family: "FuturaLT";
-  font-size: 20px;
-  line-height: 25px;
+  font-size: 60px;
+  line-height: 75px;
 }
 #leftTeams {
   border-right: 1px solid #222;
@@ -63,7 +63,7 @@ html {
   justify-content: flex-end;
 }
 .avatars {
-  min-width: 50px;
+  min-width: 150px;
   height: 100%;
   display: none;
   flex-direction: column;
@@ -71,16 +71,16 @@ html {
   align-items: center;
 }
 .avatar {
-  height: 25px;
+  height: 75px;
 }
 .score-number {
-  width: 130px;
+  width: 390px;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "FuturaLTBold";
-  font-size: 55px;
+  font-size: 165px;
   color: #fff;
   opacity: 0;
 }
@@ -92,32 +92,32 @@ html {
   justify-content: space-evenly;
   align-items: center;
   font-family: "FuturaLTBold";
-  font-size: 20px;
-  line-height: 25px;
+  font-size: 60px;
+  line-height: 75px;
   color: #fff;
   opacity: 0;
 }
 #matchCircle {
   position: absolute;
-  top: -25px;
+  top: -75px;
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  width: 450px;
+  height: 450px;
   background-color: #fff;
   border: 1px solid #222;
 }
 #logo {
   position: relative;
-  top: 30px;
-  height: 90px;
+  top: 90px;
+  height: 270px;
 }
 #matchTime {
   position: relative;
   top: 1px;
-  height: 60px;
+  height: 180px;
   color: #222;
   font-family: "FuturaLTBold";
-  font-size: 32px;
+  font-size: 96px;
   opacity: 0;
 }
 #eventMatchInfo {
@@ -126,11 +126,11 @@ html {
   justify-content: space-between;
   z-index: -1;
   align-items: flex-end;
-  padding: 0 5px;
+  padding: 0 15px;
   background-color: #444;
   font-family: "FuturaLT";
-  font-size: 15px;
-  line-height: 30px;
+  font-size: 45px;
+  line-height: 90px;
   color: #fff;
 }
 .valign-cell {
