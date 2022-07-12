@@ -61,24 +61,8 @@ func (web *Web) allianceSelectionPostHandler(w http.ResponseWriter, r *http.Requ
 					web.renderAllianceSelection(w, r, fmt.Sprintf("Invalid team number value '%s'.", teamString))
 					return
 				}
-				found := false
-				for _, team := range newRankedTeams {
-					if team.TeamId == teamId {
-						if team.Picked {
-							web.renderAllianceSelection(w, r,
-								fmt.Sprintf("Team %d is already part of an alliance.", teamId))
-							return
-						}
-						found = true
-						team.Picked = true
-						web.arena.AllianceSelectionAlliances[i][j].TeamId = teamId
-						break
-					}
-				}
-				if !found {
-					web.renderAllianceSelection(w, r, fmt.Sprintf("Team %d is not present at this event.", teamId))
-					return
-				}
+
+				web.arena.AllianceSelectionAlliances[i][j].TeamId = teamId
 			}
 		}
 	}
