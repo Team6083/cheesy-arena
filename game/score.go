@@ -14,12 +14,15 @@ type Score struct {
 }
 
 type ScoreSummary struct {
-	CollectionCount  int
-	CollectionPoints int
-	CubePoints       int
-	MatchPoints      int
-	FoulPoints       int
-	Score            int
+	GoldsCount   int
+	GoldsPoints  int
+	PearlsCount  int
+	PearlsPoints int
+	CubePoints   int
+	CubeAchieved bool
+	MatchPoints  int
+	FoulPoints   int
+	Score        int
 }
 
 // var CargoBonusRankingPointThresholdWithoutQuintet = 20
@@ -47,8 +50,10 @@ func (score *Score) Summarize(opponentFouls []Foul) *ScoreSummary {
 	}
 
 	// Calculate teleoperated period cargo points.
-	summary.CollectionCount = score.Golds + score.Pearls
-	summary.CollectionPoints = 5*score.Golds + 8*score.Pearls
+	summary.GoldsCount = score.Golds
+	summary.GoldsPoints = 5 * score.Golds
+	summary.PearlsCount = score.Pearls
+	summary.PearlsPoints = 8 * score.Pearls
 
 	// Calculate endgame points.
 	if score.Cube {
@@ -81,7 +86,7 @@ func (score *Score) Summarize(opponentFouls []Foul) *ScoreSummary {
 	// Check for the opponent fouls that automatically trigger a ranking point.
 	// Note: There are no such fouls in the 2022 game; leaving this comment for future years.
 
-	summary.MatchPoints = summary.CollectionPoints + summary.CubePoints
+	summary.MatchPoints = summary.GoldsPoints + summary.PearlsPoints + summary.CubePoints
 	summary.Score = summary.MatchPoints + summary.FoulPoints
 
 	return summary
