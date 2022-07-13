@@ -93,8 +93,8 @@ var updateResults = function(alliance) {
   // }
 
   result.score.Golds = parseInt(formData[alliance + "Golds"]);
-  result.score.Golds = parseInt(formData[alliance + "Pearls"]);
-  result.score.Golds = parseInt(formData[alliance + "Cube"]);
+  result.score.Pearls = parseInt(formData[alliance + "Pearls"]);
+  result.score.Cube = formData[alliance + "Cube"] === 'on';
 
   result.score.Fouls = [];
   for (var i = 0; formData[alliance + "Foul" + i + "Time"]; i++) {
