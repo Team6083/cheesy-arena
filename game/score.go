@@ -58,6 +58,7 @@ func (score *Score) Summarize(opponentFouls []Foul) *ScoreSummary {
 	// Calculate endgame points.
 	if score.Cube {
 		summary.CubePoints = 25
+		summary.CubeAchieved = true
 	}
 
 	// Calculate bonus ranking points.
