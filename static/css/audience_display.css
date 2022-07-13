@@ -4,7 +4,7 @@
 */
 
 html {
-  /*cursor: none;*/
+  cursor: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   overflow: hidden;
