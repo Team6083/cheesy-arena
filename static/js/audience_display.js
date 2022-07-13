@@ -95,8 +95,8 @@ var handleMatchTime = function(data) {
 
 // Handles a websocket message to update the match score.
 var handleRealtimeScore = function(data) {
-  $("#" + redSide + "ScoreNumber").text(data.Red.ScoreSummary.Score - data.Red.ScoreSummary.HangarPoints);
-  $("#" + blueSide + "ScoreNumber").text(data.Blue.ScoreSummary.Score - data.Blue.ScoreSummary.HangarPoints);
+  $("#" + redSide + "ScoreNumber").text(data.Red.ScoreSummary.Score);
+  $("#" + blueSide + "ScoreNumber").text(data.Blue.ScoreSummary.Score);
 
   $("#" + redSide + "AutoCargoRemaining").text(data.Red.ScoreSummary.AutoCargoRemaining);
   $("#" + redSide + "TeleopCargoRemaining").text(data.Red.ScoreSummary.TeleopCargoRemaining);
@@ -113,9 +113,11 @@ var handleScorePosted = function(data) {
   $("#" + redSide + "FinalTeam1Avatar").attr("src", getAvatarUrl(data.Match.Red1));
   $("#" + redSide + "FinalTeam2Avatar").attr("src", getAvatarUrl(data.Match.Red2));
   $("#" + redSide + "FinalTeam3Avatar").attr("src", getAvatarUrl(data.Match.Red3));
-  $("#" + redSide + "FinalTaxiPoints").text(data.RedScoreSummary.TaxiPoints);
+  $("#" + redSide + "FinalGoldsPoints").text(data.RedScoreSummary.GoldsPoints);
+  $("#" + redSide + "FinalPearlsPoints").text(data.RedScoreSummary.PearlsPoints);
   $("#" + redSide + "FinalCargoPoints").text(data.RedScoreSummary.CargoPoints);
-  $("#" + redSide + "FinalHangarPoints").text(data.RedScoreSummary.HangarPoints);
+  $("#" + redSide + "FinalCubePoints").html(data.RedScoreSummary.CubeAchieved ? "&#x2714;" : "&#x2718;");
+  $("#" + redSide + "FinalCubePoints").attr("data-checked", data.RedScoreSummary.CubeAchieved);
   $("#" + redSide + "FinalFoulPoints").text(data.RedScoreSummary.FoulPoints);
   $("#" + redSide + "FinalCargoBonusRankingPoint").html(data.RedScoreSummary.CargoBonusRankingPoint ? "&#x2714;" : "&#x2718;");
   $("#" + redSide + "FinalCargoBonusRankingPoint").attr("data-checked", data.RedScoreSummary.CargoBonusRankingPoint);
@@ -128,9 +130,11 @@ var handleScorePosted = function(data) {
   $("#" + blueSide + "FinalTeam1Avatar").attr("src", getAvatarUrl(data.Match.Blue1));
   $("#" + blueSide + "FinalTeam2Avatar").attr("src", getAvatarUrl(data.Match.Blue2));
   $("#" + blueSide + "FinalTeam3Avatar").attr("src", getAvatarUrl(data.Match.Blue3));
-  $("#" + blueSide + "FinalTaxiPoints").text(data.BlueScoreSummary.TaxiPoints);
+  $("#" + blueSide + "FinalGoldsPoints").text(data.BlueScoreSummary.GoldsPoints);
+  $("#" + blueSide + "FinalPearlsPoints").text(data.BlueScoreSummary.PearlsPoints);
   $("#" + blueSide + "FinalCargoPoints").text(data.BlueScoreSummary.CargoPoints);
-  $("#" + blueSide + "FinalHangarPoints").text(data.BlueScoreSummary.HangarPoints);
+  $("#" + blueSide + "FinalCubePoints").html(data.BlueScoreSummary.CubeAchieved ? "&#x2714;" : "&#x2718;");
+  $("#" + blueSide + "FinalCubePoints").attr("data-checked", data.BlueScoreSummary.CubeAchieved);
   $("#" + blueSide + "FinalFoulPoints").text(data.BlueScoreSummary.FoulPoints);
   $("#" + blueSide + "FinalCargoBonusRankingPoint").html(data.BlueScoreSummary.CargoBonusRankingPoint ? "&#x2714;" : "&#x2718;");
   $("#" + blueSide + "FinalCargoBonusRankingPoint").attr("data-checked", data.BlueScoreSummary.CargoBonusRankingPoint);

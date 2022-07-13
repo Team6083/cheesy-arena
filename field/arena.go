@@ -7,13 +7,14 @@ package field
 
 import (
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/Team254/cheesy-arena/game"
 	"github.com/Team254/cheesy-arena/model"
 	"github.com/Team254/cheesy-arena/network"
 	"github.com/Team254/cheesy-arena/partner"
 	"github.com/Team254/cheesy-arena/plc"
-	"log"
-	"time"
 )
 
 const (
@@ -164,10 +165,10 @@ func (arena *Arena) LoadSettings() error {
 	game.UpdateMatchSounds()
 	arena.MatchTimingNotifier.Notify()
 
-	game.QuintetThreshold = settings.QuintetThreshold
-	game.CargoBonusRankingPointThresholdWithoutQuintet = settings.CargoBonusRankingPointThresholdWithoutQuintet
-	game.CargoBonusRankingPointThresholdWithQuintet = settings.CargoBonusRankingPointThresholdWithQuintet
-	game.HangarBonusRankingPointThreshold = settings.HangarBonusRankingPointThreshold
+	// game.QuintetThreshold = settings.QuintetThreshold
+	// game.CargoBonusRankingPointThresholdWithoutQuintet = settings.CargoBonusRankingPointThresholdWithoutQuintet
+	// game.CargoBonusRankingPointThresholdWithQuintet = settings.CargoBonusRankingPointThresholdWithQuintet
+	// game.HangarBonusRankingPointThreshold = settings.HangarBonusRankingPointThreshold
 
 	return nil
 }
@@ -774,16 +775,16 @@ func (arena *Arena) handlePlcInput() {
 		redLowerHubCounts, redUpperHubCounts, blueLowerHubCounts, blueUpperHubCounts := arena.Plc.GetHubCounts()
 		redHub := &arena.RedRealtimeScore.hub
 		redHub.UpdateState(redLowerHubCounts, redUpperHubCounts, matchStartTime, currentTime)
-		redScore.AutoCargoLower = redHub.AutoCargoLower
-		redScore.AutoCargoUpper = redHub.AutoCargoUpper
-		redScore.TeleopCargoLower = redHub.TeleopCargoLower
-		redScore.TeleopCargoUpper = redHub.TeleopCargoUpper
+		// redScore.AutoCargoLower = redHub.AutoCargoLower
+		// redScore.AutoCargoUpper = redHub.AutoCargoUpper
+		// redScore.TeleopCargoLower = redHub.TeleopCargoLower
+		// redScore.TeleopCargoUpper = redHub.TeleopCargoUpper
 		blueHub := &arena.RedRealtimeScore.hub
 		blueHub.UpdateState(blueLowerHubCounts, blueUpperHubCounts, matchStartTime, currentTime)
-		blueScore.AutoCargoLower = blueHub.AutoCargoLower
-		blueScore.AutoCargoUpper = blueHub.AutoCargoUpper
-		blueScore.TeleopCargoLower = blueHub.TeleopCargoLower
-		blueScore.TeleopCargoUpper = blueHub.TeleopCargoUpper
+		// blueScore.AutoCargoLower = blueHub.AutoCargoLower
+		// blueScore.AutoCargoUpper = blueHub.AutoCargoUpper
+		// blueScore.TeleopCargoLower = blueHub.TeleopCargoLower
+		// blueScore.TeleopCargoUpper = blueHub.TeleopCargoUpper
 	}
 
 	if !oldRedScore.Equals(redScore) || !oldBlueScore.Equals(blueScore) {

@@ -22,8 +22,8 @@ func (foul *Foul) PointValue() int {
 		return 0
 	}
 	if foul.Rule().IsTechnical {
-		return 8
+		return 15
 	} else {
-		return 4
+		return 5
 	}
 }

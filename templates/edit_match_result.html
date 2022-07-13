@@ -25,7 +25,7 @@
 </div>
 <div id="scoreTemplate" style="display: none;">
   <div class="well well-{{"{{alliance}}"}}">
-    <fieldset>
+    <!-- <fieldset>
       <legend>Autonomous</legend>
       <b>Taxi</b>
       <div class="form-group">
@@ -70,6 +70,28 @@
             </div>
           </div>
         {{end}}
+      </div>
+    </fieldset> -->
+    
+    <fieldset>
+      <legend>TeleOp</legend>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-lg-2 col-lg-offset-2 text-center">Golds</label>
+          <label class="col-lg-2 text-center">Pearls</label>
+          <label class="col-lg-2 text-center">Cube</label>
+        </div>
+        <div class="row">
+          <div class=" col-lg-offset-2 col-lg-2">
+            <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}Golds">
+          </div>
+          <div class="col-lg-2">
+            <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}Pearls">
+          </div>
+          <div class="col-lg-2">
+            <input type="checkbox" class="form-control input-sm" name="{{"{{alliance}}"}}Cube">
+          </div>
+        </div>
       </div>
     </fieldset>
     <fieldset>
@@ -167,9 +189,16 @@
   matchResult = jQuery.parseJSON('{{.MatchResultJson}}');
   allianceResults["red"] = {alliance: "red", team1: {{.Match.Red1}}, team2: {{.Match.Red2}},
       team3: {{.Match.Red3}}, score: matchResult.RedScore, cards: matchResult.RedCards};
+  // allianceResults["blue"] = {alliance: "blue", team1: {{.Match.Blue1}}, team2: {{.Match.Blue2}},
+  //     team3: {{.Match.Blue3}}, score: matchResult.BlueScore, cards: matchResult.BlueCards};
+  renderResults("red");
+  // renderResults("blue");
+</script>
+<script>
+  var matchId = {{.Match.Id}};
+  matchResult = jQuery.parseJSON('{{.MatchResultJson}}');
   allianceResults["blue"] = {alliance: "blue", team1: {{.Match.Blue1}}, team2: {{.Match.Blue2}},
       team3: {{.Match.Blue3}}, score: matchResult.BlueScore, cards: matchResult.BlueCards};
-  renderResults("red");
   renderResults("blue");
 </script>
 {{end}}
