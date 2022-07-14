@@ -21,14 +21,20 @@ var overlayCenteringBottomHideParams = {queue: false, bottom: $("#overlayCenteri
 var overlayCenteringBottomShowParams = {queue: false, bottom: "0px"};
 var overlayCenteringTopHideParams = {queue: false, top: overlayCenteringTopUp};
 var overlayCenteringTopShowParams = {queue: false, top: "50px"};
-var eventMatchInfoDown = "90px";
+var eventMatchInfoDown = "30px";
+var eventMatchInfoDownBig = "90px";
 var eventMatchInfoUp = $("#eventMatchInfo").css("height");
 var logoUp = "10px";
 var logoDown = $("#logo").css("top");
 var scoreIn = $(".score").css("width");
-var scoreMid = "405px";
-var scoreOut = "765px";
-var scoreFieldsOut = "120px";
+var scoreMid = "135px";
+var scoreMidBig = "405px";
+var scoreOut = "255px";
+var scoreOutBig = "765px";
+var scoreFieldsOut = "40px";
+var scoreFieldsOutBig = "120px";
+
+var bigOverlay = false;
 
 // Handles a websocket message to change which screen is displayed.
 var handleAudienceDisplayMode = function(targetScreen) {
@@ -199,9 +205,9 @@ var transitionBlankToIntro = function(callback) {
     $(".teams").css("display", "flex");
     $(".avatars").css("display", "flex");
     $(".avatars").css("opacity", 1);
-    $(".score").transition({queue: false, width: scoreMid}, 500, "ease", function() {
+    $(".score").transition({queue: false, width: (bigOverlay ? scoreMidBig : scoreMid)}, 500, "ease", function() {
       $("#eventMatchInfo").css("display", "flex");
-      $("#eventMatchInfo").transition({queue: false, height: eventMatchInfoDown}, 500, "ease", callback);
+      $("#eventMatchInfo").transition({queue: false, height: (bigOverlay ? eventMatchInfoDownBig : eventMatchInfoDown)}, 500, "ease", callback);
     });
   });
 };
@@ -211,9 +217,9 @@ var transitionIntroToInMatch = function(callback) {
     $(".avatars").hide();
   });
   $(".score-fields").css("display", "flex");
-  $(".score-fields").transition({queue: false, width: scoreFieldsOut}, 500, "ease");
+  $(".score-fields").transition({queue: false,width: (bigOverlay ? scoreFieldsOutBig : scoreFieldsOut)}, 500, "ease");
   $("#logo").transition({queue: false, top: logoUp}, 500, "ease");
-  $(".score").transition({queue: false, width: scoreOut}, 500, "ease", function() {
+  $(".score").transition({queue: false, width: (bigOverlay ? scoreOutBig : scoreOut)}, 500, "ease", function() {
     $(".score-number").transition({queue: false, opacity: 1}, 750, "ease");
     $("#matchTime").transition({queue: false, opacity: 1}, 750, "ease", callback);
     $(".score-fields").transition({queue: false, opacity: 1}, 750, "ease");
@@ -236,11 +242,11 @@ var transitionBlankToInMatch = function(callback) {
   $("#overlayCentering").transition(overlayCenteringShowParams, 500, "ease", function() {
     $(".teams").css("display", "flex");
     $(".score-fields").css("display", "flex");
-    $(".score-fields").transition({queue: false, width: scoreFieldsOut}, 500, "ease");
+    $(".score-fields").transition({queue: false, width: (bigOverlay ? scoreFieldsOutBig : scoreFieldsOut)}, 500, "ease");
     $("#logo").transition({queue: false, top: logoUp}, 500, "ease");
-    $(".score").transition({queue: false, width: scoreOut}, 500, "ease", function() {
+    $(".score").transition({queue: false, width: (bigOverlay ? scoreOutBig : scoreOut)}, 500, "ease", function() {
       $("#eventMatchInfo").css("display", "flex");
-      $("#eventMatchInfo").transition({queue: false, height: eventMatchInfoDown}, 500, "ease", callback);
+      $("#eventMatchInfo").transition({queue: false, height: (bigOverlay ? eventMatchInfoDownBig : eventMatchInfoDown)}, 500, "ease", callback);
       $(".score-number").transition({queue: false, opacity: 1}, 750, "ease");
       $("#matchTime").transition({queue: false, opacity: 1}, 750, "ease");
       $(".score-fields").transition({queue: false, opacity: 1}, 750, "ease");
@@ -254,7 +260,7 @@ var transitionInMatchToIntro = function(callback) {
   $("#matchTime").transition({queue: false, opacity: 0}, 300, "linear", function() {
     $(".score-fields").transition({queue: false, width: 0}, 500, "ease");
     $("#logo").transition({queue: false, top: logoDown}, 500, "ease");
-    $(".score").transition({queue: false, width: scoreMid}, 500, "ease", function() {
+    $(".score").transition({queue: false, width: (bigOverlay ? scoreMidBig : scoreMid)}, 500, "ease", function() {
       $(".score-fields").hide();
       $(".avatars").css("display", "flex");
       $(".avatars").transition({queue: false, opacity: 1}, 500, "ease", callback);
@@ -433,9 +439,9 @@ var transitionTimeoutToIntro = function(callback) {
       $(".avatars").css("display", "flex");
       $(".avatars").css("opacity", 1);
       $(".teams").css("display", "flex");
-      $(".score").transition({queue: false, width: scoreMid}, 500, "ease", function () {
+      $(".score").transition({queue: false, width: (bigOverlay ? scoreMidBig : scoreMid)}, 500, "ease", function () {
         $("#eventMatchInfo").show();
-        $("#eventMatchInfo").transition({queue: false, height: eventMatchInfoDown}, 500, "ease", callback);
+        $("#eventMatchInfo").transition({queue: false, height: (bigOverlay ? eventMatchInfoDownBig : eventMatchInfoDown)}, 500, "ease", callback);
       });
     });
   });
@@ -523,6 +529,22 @@ $(function() {
   } else {
     overlayCenteringHideParams = overlayCenteringBottomHideParams;
     overlayCenteringShowParams = overlayCenteringBottomShowParams;
+  }
+
+  bigOverlay = urlParams.get("big_overlay") === "true";
+  if (bigOverlay) {
+    overlayCenteringBottomHideParams.bottom = $("#overlayCentering.bigOverlay").css("bottom");
+    $("#overlayCentering").addClass("bigOverlay");
+    $("#matchOverlayTop").addClass("bigOverlay");
+    $(".teams").addClass("bigOverlay");
+    $(".avatars").addClass("bigOverlay");
+    $(".avatar").addClass("bigOverlay");
+    $(".score-number").addClass("bigOverlay");
+    $(".score-fields").addClass("bigOverlay");
+    $("#matchCircle").addClass("bigOverlay");
+    $("#logo").addClass("bigOverlay");
+    $("#matchTime").addClass("bigOverlay");
+    $("#eventMatchInfo").addClass("bigOverlay");
   }
 
   // Set up the websocket back to the server.
