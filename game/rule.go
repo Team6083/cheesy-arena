@@ -15,13 +15,15 @@ type Rule struct {
 
 // All rules from the 2022 game that carry point penalties.
 var rules = []*Rule{
-	{1, "C1", true, false, "不得進入自己的 Collection"},
-	{2, "C6", false, false, "機器人不能分離"},
-	{3, "C6", true, false, "機器人不能分離"},
-	{4, "C7", false, false, "不得接觸敵方機器人超過5秒"},
-	{5, "C10", true, false, "只能使用 Catching 將物件丟進場地內"},
-	{6, "C11", false, false, "每台機器人至多控制3個場地物件，超過五秒視為犯規"},
-	{7, "C12", true, false, "機器人或機器人控制的物件觸碰到Trap或是在endgame時間外碰到cube"},
+	{1, "C131", false, false, "機器人不能分離"},
+	{2, "C132", true, false, "機器人不能分離"},
+	{3, "C21", false, false, "不得接觸敵方機器人超過5秒"},
+	{4, "C31", false, false, "每台機器人至多控制3個場地物件, 超過五秒視為犯規"},
+	{5, "C32", true, false, "只能使用 Catching 將物件丟進場地內"},
+	{6, "C33", true, false, "不得使用任意方式阻擋比賽進行"},
+	{7, "C41", true, false, "機器人或機器人控制的物件觸碰到Trap或是在Endgame時間外碰到Cube"},
+	{8, "C51", true, false, "不得進入自己的 Collection"},
+	{9, "C52", true, false, "得進入敵方 Catching 超過3秒 "},
 }
 var ruleMap map[int]*Rule
 
