@@ -19,19 +19,13 @@ var MatchSounds []*MatchSound
 func UpdateMatchSounds() {
 	MatchSounds = []*MatchSound{
 		{
-			"start",
-			"wav",
-			0,
-			false,
-		},
-		{
-			"end",
+			"countdown",
 			"wav",
 			float64(MatchTiming.AutoDurationSec),
 			false,
 		},
 		{
-			"resume",
+			"start",
 			"wav",
 			float64(MatchTiming.AutoDurationSec + MatchTiming.PauseDurationSec),
 			false,
