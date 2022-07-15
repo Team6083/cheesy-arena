@@ -533,7 +533,7 @@ $(function() {
 
   bigOverlay = urlParams.get("big_overlay") === "true";
   if (bigOverlay) {
-    overlayCenteringBottomHideParams.bottom = $("#overlayCentering.bigOverlay").css("bottom");
+    overlayCenteringBottomHideParams.bottom = "-800px";
     $("#overlayCentering").addClass("bigOverlay");
     $("#matchOverlayTop").addClass("bigOverlay");
     $(".teams").addClass("bigOverlay");
