@@ -828,8 +828,6 @@ func (arena *Arena) handlePlcInputOutput() {
 	teleopGracePeriod := matchStartTime.Add(game.GetDurationToTeleopEnd() + game.ChargeStationTeleopGracePeriod)
 	inGracePeriod := currentTime.Before(teleopGracePeriod)
 
-	redScore := &arena.RedRealtimeScore.CurrentScore
-	blueScore := &arena.BlueRealtimeScore.CurrentScore
 	redChargeStationLevel, blueChargeStationLevel := arena.Plc.GetChargeStationsLevel()
 
 	switch arena.MatchState {
@@ -872,15 +870,6 @@ func (arena *Arena) handlePlcInputOutput() {
 		} else {
 			arena.Plc.SetChargeStationLights(false, false)
 		}
-		if arena.lastMatchState != PostMatch {
-			go func() {
-				// Capture a single reading of the charge station levels after the grace period following the match.
-				time.Sleep(game.ChargeStationTeleopGracePeriod)
-				redScore.EndgameChargeStationLevel, blueScore.EndgameChargeStationLevel =
-					arena.Plc.GetChargeStationsLevel()
-				arena.RealtimeScoreNotifier.Notify()
-			}()
-		}
 	case AutoPeriod:
 		arena.Plc.SetStackBuzzer(false)
 		arena.Plc.SetStackLights(false, false, false, true)
@@ -891,11 +880,6 @@ func (arena *Arena) handlePlcInputOutput() {
 	case TeleopPeriod:
 		// Game-specific PLC functions.
 		arena.Plc.SetChargeStationLights(redChargeStationLevel, blueChargeStationLevel)
-		if arena.lastMatchState != TeleopPeriod {
-			// Capture a single reading of the charge station levels after the autonomous pause.
-			redScore.AutoChargeStationLevel, blueScore.AutoChargeStationLevel = arena.Plc.GetChargeStationsLevel()
-			arena.RealtimeScoreNotifier.Notify()
-		}
 	}
 }
 

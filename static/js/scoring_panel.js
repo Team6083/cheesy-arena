@@ -39,43 +39,38 @@ const handleMatchTime = function(data) {
 };
 
 // Handles a websocket message to update the realtime scoring fields.
-const handleRealtimeScore = function(data) {
-  let realtimeScore;
+var handleRealtimeScore = function(data) {
+  var realtimeScore;
   if (alliance === "red") {
     realtimeScore = data.Red;
   } else {
     realtimeScore = data.Blue;
   }
-  const score = realtimeScore.Score;
+  var score = realtimeScore.Score;
+
+  console.log(score);
+
+  $("#cube>.value").text(score.CubeStatus ? "Yes" : "No");
+  $("#cube").attr("data-value", score.CubeStatus);
 
   for (let i = 0; i < 3; i++) {
     const i1 = i + 1;
-    $(`#mobilityStatus${i1}>.value`).text(score.MobilityStatuses[i] ? "Yes" : "No");
-    $("#mobilityStatus" + i1).attr("data-value", score.MobilityStatuses[i]);
-    $("#autoDockStatus" + i1 + ">.value").text(score.AutoDockStatuses[i] ? "Yes" : "No");
-    $("#autoDockStatus" + i1).attr("data-value", score.AutoDockStatuses[i]);
-    $("#endgameStatus" + i1 + ">.value").text(getEndgameStatusText(score.EndgameStatuses[i]));
-    $("#endgameStatus" + i1).attr("data-value", score.EndgameStatuses[i]);
+    $(`#parkStatus${i1}>.value`).text(score.ParkStatuses[i] ? "Yes" : "No");
+    $("#parkStatus" + i1).attr("data-value", score.ParkStatuses[i]);
   }
 
-  $("#autoChargeStationLevel>.value").text(score.AutoChargeStationLevel ? "Level" : "Not Level");
-  $("#autoChargeStationLevel").attr("data-value", score.AutoChargeStationLevel);
-  $("#endgameChargeStationLevel>.value").text(score.EndgameChargeStationLevel ? "Level" : "Not Level");
-  $("#endgameChargeStationLevel").attr("data-value", score.EndgameChargeStationLevel);
+  $("#teleopCells").text(score.PowerCell);
+  $("#teleopBlocks").text(score.Block);
+};
 
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 9; j++) {
-      $(`#gridAutoScoringRow${i}Node${j}`).attr("data-value", score.Grid.AutoScoring[i][j]);
-      $(`#gridNodeStatesRow${i}Node${j}`).children().each(function() {
-        const element = $(this);
-        element.attr("data-value", element.attr("data-node-state") === score.Grid.Nodes[i][j].toString());
-      });
-    }
-  }
+// Handles a keyboard event and sends the appropriate websocket message.
+var handleKeyPress = function(event) {
+  websocket.send(String.fromCharCode(event.keyCode));
 };
 
 // Handles an element click and sends the appropriate websocket message.
 const handleClick = function(command, teamPosition = 0, gridRow = 0, gridNode = 0, nodeState = 0) {
+  console.log(`click_${command}`);
   websocket.send(command, {TeamPosition: teamPosition, GridRow: gridRow, GridNode: gridNode, NodeState: nodeState});
 };
 
@@ -84,18 +79,6 @@ const commitMatchScore = function() {
   websocket.send("commitMatch");
   $("#postMatchMessage").css("display", "flex");
   $("#commitMatchScore").hide();
-};
-
-// Returns the display text corresponding to the given integer endgame status value.
-const getEndgameStatusText = function(level) {
-  switch (level) {
-    case 1:
-      return "Park";
-    case 2:
-      return "Dock";
-    default:
-      return "None";
-  }
 };
 
 $(function() {
@@ -108,4 +91,6 @@ $(function() {
     matchTime: function(event) { handleMatchTime(event.data); },
     realtimeScore: function(event) { handleRealtimeScore(event.data); },
   });
+
+  $(document).keypress(handleKeyPress);
 });

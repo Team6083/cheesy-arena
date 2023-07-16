@@ -109,9 +109,6 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 		} else {
 			args := struct {
 				TeamPosition int
-				GridRow      int
-				GridNode     int
-				NodeState    game.NodeState
 			}{}
 			err = mapstructure.Decode(data, &args)
 			if err != nil {
@@ -120,50 +117,28 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 			}
 
 			switch command {
-			case "mobilityStatus":
+			case "parkStatus":
 				if args.TeamPosition >= 1 && args.TeamPosition <= 3 {
-					score.MobilityStatuses[args.TeamPosition-1] = !score.MobilityStatuses[args.TeamPosition-1]
+					score.ParkStatuses[args.TeamPosition-1] = !score.ParkStatuses[args.TeamPosition-1]
 					scoreChanged = true
 				}
-			case "autoDockStatus":
-				if args.TeamPosition >= 1 && args.TeamPosition <= 3 {
-					score.AutoDockStatuses[args.TeamPosition-1] = !score.AutoDockStatuses[args.TeamPosition-1]
-					scoreChanged = true
-				}
-			case "endgameStatus":
-				if args.TeamPosition >= 1 && args.TeamPosition <= 3 {
-					score.EndgameStatuses[args.TeamPosition-1]++
-					if score.EndgameStatuses[args.TeamPosition-1] > 2 {
-						score.EndgameStatuses[args.TeamPosition-1] = 0
-					}
-					scoreChanged = true
-				}
-			case "autoChargeStationLevel":
-				score.AutoChargeStationLevel = !score.AutoChargeStationLevel
+			case "C", "c":
+				score.CubeStatus = !score.CubeStatus
 				scoreChanged = true
-			case "endgameChargeStationLevel":
-				score.EndgameChargeStationLevel = !score.EndgameChargeStationLevel
+			case "R", "r":
+				score.PowerCell++
 				scoreChanged = true
-			case "gridAutoScoring":
-				if args.GridRow >= 0 && args.GridRow <= 2 && args.GridNode >= 0 && args.GridNode <= 8 {
-					score.Grid.AutoScoring[args.GridRow][args.GridNode] =
-						!score.Grid.AutoScoring[args.GridRow][args.GridNode]
+			case "E", "e":
+				if score.PowerCell-1 >= 0 {
+					score.PowerCell--
 					scoreChanged = true
 				}
-			case "gridNode":
-				if args.GridRow >= 0 && args.GridRow <= 2 && args.GridNode >= 0 && args.GridNode <= 8 {
-					currentState := score.Grid.Nodes[args.GridRow][args.GridNode]
-					if currentState == args.NodeState {
-						score.Grid.Nodes[args.GridRow][args.GridNode] = game.Empty
-						if web.arena.MatchState == field.AutoPeriod || web.arena.MatchState == field.PausePeriod {
-							score.Grid.AutoScoring[args.GridRow][args.GridNode] = false
-						}
-					} else {
-						score.Grid.Nodes[args.GridRow][args.GridNode] = args.NodeState
-						if web.arena.MatchState == field.AutoPeriod || web.arena.MatchState == field.PausePeriod {
-							score.Grid.AutoScoring[args.GridRow][args.GridNode] = true
-						}
-					}
+			case "F", "f":
+				score.Block++
+				scoreChanged = true
+			case "D", "d":
+				if score.Block-1 >= 0 {
+					score.Block--
 					scoreChanged = true
 				}
 			}
