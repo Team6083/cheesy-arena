@@ -78,11 +78,11 @@ func (web *Web) scheduleGeneratePostHandler(w http.ResponseWriter, r *http.Reque
 			"generating the schedule.")
 		return
 	}
-	if len(teams) < 6 {
-		web.renderSchedule(w, r, fmt.Sprintf("There are only %d teams. There must be at least 6 teams to generate "+
-			"a schedule.", len(teams)))
-		return
-	}
+	//if len(teams) < 6 {
+	//	web.renderSchedule(w, r, fmt.Sprintf("There are only %d teams. There must be at least 6 teams to generate "+
+	//		"a schedule.", len(teams)))
+	//	return
+	//}
 
 	matches, err := tournament.BuildRandomSchedule(teams, scheduleBlocks, matchType)
 	if err != nil {
