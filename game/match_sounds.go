@@ -27,13 +27,13 @@ func UpdateMatchSounds() {
 		{
 			"end",
 			"wav",
-			float64(MatchTiming.AutoDurationSec),
+			-1, //float64(MatchTiming.AutoDurationSec),
 			false,
 		},
 		{
 			"resume",
 			"wav",
-			float64(MatchTiming.AutoDurationSec + MatchTiming.PauseDurationSec),
+			-1, //float64(MatchTiming.AutoDurationSec + MatchTiming.PauseDurationSec),
 			false,
 		},
 		{
