@@ -4,7 +4,7 @@
 */
 
 html {
-  cursor: none;
+  /*cursor: none;*/
   -webkit-user-select: none;
   -moz-user-select: none;
   overflow: hidden;
@@ -17,6 +17,10 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+#overlayCentering.bigOverlay {
+  bottom: -800px;
+  height: 710px;
 }
 #matchOverlayContainer {
   display: flex;
@@ -31,6 +35,9 @@ html {
 #matchOverlayTop {
   height: 100px;
   display: flex;
+}
+#matchOverlayTop.bigOverlay {
+  height: 300px;
 }
 .playoff-alliance {
   position: relative;
@@ -73,6 +80,11 @@ html {
   font-size: 20px;
   line-height: 25px;
 }
+.teams.bigOverlay {
+  width: 165px;
+  font-size: 60px;
+  line-height: 75px;
+}
 #leftTeams {
   border-right: 1px solid #222;
 }
@@ -102,8 +114,14 @@ html {
   justify-content: space-evenly;
   align-items: center;
 }
+.avatars.bigOverlay {
+  min-width: 150px;
+}
 .avatar {
   height: 25px;
+}
+.avatar.bigOverlay {
+  height: 75px;
 }
 .score-number {
   width: 130px;
@@ -116,6 +134,10 @@ html {
   color: #fff;
   opacity: 0;
 }
+.score-number.bigOverlay {
+  width: 390px;
+  font-size: 165px;
+}
 .score-fields {
   height: 100%;
   width: 0;
@@ -123,6 +145,10 @@ html {
   flex-direction: row;
   justify-content: space-evenly;
   opacity: 0;
+}
+.score-fields.bigOverlay {
+  font-size: 60px;
+  line-height: 75px;
 }
 .score-links {
   display: flex;
@@ -157,10 +183,19 @@ html {
   background-color: #fff;
   border: 1px solid #222;
 }
+#matchCircle.bigOverlay {
+  top: -75px;
+  width: 450px;
+  height: 450px;
+}
 #logo {
   position: relative;
   top: 45px;
   height: 50px;
+}
+#logo.bigOverlay {
+  top: 90px;
+  height: 150px;
 }
 #matchTime {
   position: relative;
@@ -170,6 +205,11 @@ html {
   font-family: "FuturaLTBold";
   font-size: 32px;
   opacity: 0;
+}
+#matchTime.bigOverlay {
+  height: 180px;
+  font-size: 96px;
+  top: 120px;
 }
 #eventMatchInfo {
   height: 0;
@@ -183,6 +223,11 @@ html {
   font-size: 15px;
   line-height: 30px;
   color: #fff;
+}
+#eventMatchInfo.bigOverlay {
+  padding: 0 15px;
+  font-size: 45px;
+  line-height: 90px;
 }
 #playoffSeriesStatus {
   width: 40px;
@@ -214,16 +259,26 @@ html {
   color: #222;
   border: 1px solid #222;
 }
+#timeoutDetails.bigOverlay {
+  bottom: 470px;
+  height: 150px;
+}
 #timeoutBreakDescription {
   font-weight: bold;
   font-size: 20px;
   opacity: 0;
+}
+#timeoutDetails.bigOverlay #timeoutBreakDescription {
+  font-size: 60px;
 }
 #timeoutNextMatch {
   text-align: center;
   font-weight: bold;
   font-size: 14px;
   opacity: 0;
+}
+#timeoutDetails.bigOverlay #timeoutNextMatch {
+  font-size: 42px;
 }
 #blindsContainer {
   position: fixed;

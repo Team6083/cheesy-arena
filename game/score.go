@@ -28,8 +28,8 @@ func (score *Score) Summarize(opponentScore *Score) *ScoreSummary {
 	}
 
 	// Calculate teleoperated period points.
-	summary.MatchPoints += score.PowerCell * 10
-	summary.MatchPoints += score.Block * 5
+	summary.PowerCellPoints = score.PowerCell * 10
+	summary.BlockPoints = score.Block * 5
 
 	parkPoints := 0
 	for i := 0; i < 3; i++ {
@@ -43,8 +43,9 @@ func (score *Score) Summarize(opponentScore *Score) *ScoreSummary {
 		cubePoints += 30
 	}
 
-	summary.EndgamePoints = parkPoints + cubePoints
-	summary.MatchPoints += parkPoints + cubePoints
+	summary.ParkingPoints = parkPoints
+	summary.CubePoints = cubePoints
+	summary.MatchPoints = summary.PowerCellPoints + summary.BlockPoints + parkPoints + cubePoints
 
 	// Calculate penalty points.
 	for _, foul := range opponentScore.Fouls {

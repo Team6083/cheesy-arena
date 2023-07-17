@@ -6,7 +6,10 @@
 package game
 
 type ScoreSummary struct {
-	EndgamePoints        int
+	PowerCellPoints      int
+	BlockPoints          int
+	ParkingPoints        int
+	CubePoints           int
 	MatchPoints          int
 	FoulPoints           int
 	Score                int
