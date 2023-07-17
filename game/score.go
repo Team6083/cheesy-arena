@@ -45,7 +45,8 @@ func (score *Score) Summarize(opponentScore *Score) *ScoreSummary {
 
 	summary.ParkingPoints = parkPoints
 	summary.CubePoints = cubePoints
-	summary.MatchPoints = summary.PowerCellPoints + summary.BlockPoints + parkPoints + cubePoints
+	summary.EndgamePoints = parkPoints + cubePoints
+	summary.MatchPoints = summary.PowerCellPoints + summary.BlockPoints + summary.EndgamePoints
 
 	// Calculate penalty points.
 	for _, foul := range opponentScore.Fouls {

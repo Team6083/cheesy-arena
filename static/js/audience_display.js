@@ -25,25 +25,25 @@ const overlayCenteringBottomShowParams = {queue: false, bottom: "0px"};
 const overlayCenteringTopHideParams = {queue: false, top: overlayCenteringTopUp};
 const overlayCenteringTopShowParams = {queue: false, top: "50px"};
 const eventMatchInfoDown = "30px";
-const eventMatchInfoDownBig = "90px";
+const eventMatchInfoDownBig = "60px";
 const eventMatchInfoUp = $("#eventMatchInfo").css("height");
 const logoUp = "30px";
-const logoUpBig = "80px";
+const logoUpBig = "60px";
 const logoDown = $("#logo").css("top");
 const logoDownBig = $("#logo.bigOverlay").css("top");
 const scoreIn = $(".score").css("width");
 const scoreMid = "185px";
-const scoreMidBig = "405px";
+const scoreMidBig = "370px";
 const scoreOut = "255px";
-const scoreOutBig = "765px";
+const scoreOutBig = "510px";
 const scoreFieldsOut = "40px";
-const scoreFieldsOutBig = "120px";
+const scoreFieldsOutBig = "80px";
 const scoreLogoTop = "-450px";
 const bracketLogoTop = "-780px";
 const bracketLogoScale = 0.75;
 const timeoutDetailsIn = $("#timeoutDetails").css("width");
 const timeoutDetailsOut = "570px";
-const timeoutDetailsOutBig = "1710px";
+const timeoutDetailsOutBig = "1140px";
 
 let bigOverlay = true;
 
@@ -155,10 +155,6 @@ const handleRealtimeScore = function(data) {
   $("#" + redSide + "ScoreNumber").text(data.Red.ScoreSummary.Score - data.Red.ScoreSummary.EndgamePoints);
   $("#" + blueSide + "ScoreNumber").text(data.Blue.ScoreSummary.Score - data.Blue.ScoreSummary.EndgamePoints);
 
-  $("#" + redSide + "LinkNumerator").text(data.Red.ScoreSummary.NumLinks);
-  $("#" + redSide + "LinkDenominator").text(data.Red.ScoreSummary.NumLinksGoal);
-  $("#" + blueSide + "LinkNumerator").text(data.Blue.ScoreSummary.NumLinks);
-  $("#" + blueSide + "LinkDenominator").text(data.Blue.ScoreSummary.NumLinksGoal);
   if (currentMatch.Type === matchTypePlayoff) {
     $("#" + redSide + "LinkDenominator").hide();
     $("#" + blueSide + "LinkDenominator").hide();

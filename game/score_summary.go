@@ -10,6 +10,7 @@ type ScoreSummary struct {
 	BlockPoints          int
 	ParkingPoints        int
 	CubePoints           int
+	EndgamePoints        int
 	MatchPoints          int
 	FoulPoints           int
 	Score                int
