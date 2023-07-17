@@ -25,12 +25,12 @@ func UpdateMatchSounds() {
 		{
 			"end",
 			"wav",
-			float64(MatchTiming.AutoDurationSec),
+			-1, //float64(MatchTiming.AutoDurationSec),
 		},
 		{
 			"resume",
 			"wav",
-			float64(MatchTiming.AutoDurationSec + MatchTiming.PauseDurationSec),
+			-1, //float64(MatchTiming.AutoDurationSec + MatchTiming.PauseDurationSec),
 		},
 		{
 			"warning_guitar",
