@@ -34,18 +34,13 @@ const renderResults = function(alliance) {
   for (let i = 0; i < 3; i++) {
     const i1 = i + 1;
 
-    getInputElement(alliance, "MobilityStatuses" + i1).prop("checked", result.score.MobilityStatuses[i]);
-    getInputElement(alliance, "AutoDockStatuses" + i1).prop("checked", result.score.AutoDockStatuses[i]);
-    getInputElement(alliance, "EndgameStatuses" + i1, result.score.EndgameStatuses[i]).prop("checked", true);
-
-    for (let j = 0; j < 9; j++) {
-      getInputElement(alliance, `GridAutoScoringRow${i}Node${j}`).prop("checked", result.score.Grid.AutoScoring[i][j]);
-      getSelectElement(alliance, `GridNodeStatesRow${i}Node${j}`).val(result.score.Grid.Nodes[i][j]);
-    }
+    getInputElement(alliance, "ParkStatuses" + i1, result.score.ParkStatuses[i]).prop("checked", true);
   }
 
-  getInputElement(alliance, "AutoChargeStationLevel").prop("checked", result.score.AutoChargeStationLevel);
-  getInputElement(alliance, "EndgameChargeStationLevel").prop("checked", result.score.EndgameChargeStationLevel);
+  if (result.score.CubeStatus) getInputElement(alliance, "EndgameCube").prop("checked", true);
+
+  getInputElement(alliance, "Cells").prop("value", result.score.PowerCell);
+  getInputElement(alliance, "Blocks").prop("value", result.score.Block);
 
   if (result.score.Fouls != null) {
     $.each(result.score.Fouls, function(k, v) {
@@ -70,27 +65,19 @@ const updateResults = function(alliance) {
     formData[v.name] = v.value;
   });
 
-  result.score.MobilityStatuses = [];
-  result.score.Grid = {AutoScoring: [], Nodes: []};
-  result.score.AutoDockStatuses = [];
-  result.score.EndgameStatuses = [];
+  result.score.PowerCell = 0;
+  result.score.Block = 0;
+  result.score.CubeStatus = false;
+  result.score.ParkStatuses = [];
   for (let i = 0; i < 3; i++) {
     const i1 = i + 1;
 
-    result.score.MobilityStatuses[i] = formData[alliance + "MobilityStatuses" + i1] === "on";
-    result.score.AutoDockStatuses[i] = formData[alliance + "AutoDockStatuses" + i1] === "on";
-    result.score.EndgameStatuses[i] = parseInt(formData[alliance + "EndgameStatuses" + i1]);
-
-    result.score.Grid.AutoScoring[i] = [];
-    result.score.Grid.Nodes[i] = [];
-    for (let j = 0; j < 9; j++) {
-      result.score.Grid.AutoScoring[i][j] = formData[alliance + `GridAutoScoringRow${i}Node${j}`] === "on";
-      result.score.Grid.Nodes[i][j] = parseInt(formData[alliance + `GridNodeStatesRow${i}Node${j}`]);
-    }
+    result.score.ParkStatuses[i] = formData[alliance + "ParkStatuses" + i1] === "true";
   }
 
-  result.score.AutoChargeStationLevel = formData[alliance + "AutoChargeStationLevel"] === "on";
-  result.score.EndgameChargeStationLevel = formData[alliance + "EndgameChargeStationLevel"] === "on";
+  result.score.PowerCell = parseInt(formData[alliance + "Cells"]);
+  result.score.Block = parseInt(formData[alliance + "Blocks"]);
+  result.score.CubeStatus = formData[alliance + "EndgameCube"] === "on";
 
   result.score.Fouls = [];
 
