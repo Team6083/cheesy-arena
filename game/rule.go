@@ -23,7 +23,7 @@ var rules = []*Rule{
 	{6, "C12", true, false, "不得使用任意方式阻擋比賽進行"},
 	{7, "C13", true, false, "不得進入對方的 Parking"},
 	{8, "C14", true, false, "不得故意擋在對方的 Collection 前面, 超過五秒視為犯規"},
-	{9, "C16", true, false, "2分30秒前機器人或機器人控制的物件觸碰到 Cube"},
+	{9, "C16", false, false, "2分30秒前機器人或機器人控制的物件觸碰到 Cube"},
 }
 var ruleMap map[int]*Rule
 
