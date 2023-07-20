@@ -28,8 +28,8 @@ func (score *Score) Summarize(opponentScore *Score) *ScoreSummary {
 	}
 
 	// Calculate teleoperated period points.
-	summary.PowerCellPoints = score.PowerCell * 10
-	summary.BlockPoints = score.Block * 5
+	summary.PowerCellPoints = score.PowerCell * 5
+	summary.BlockPoints = score.Block * 10
 
 	parkPoints := 0
 	for i := 0; i < 3; i++ {
