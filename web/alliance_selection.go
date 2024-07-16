@@ -186,8 +186,8 @@ func (web *Web) allianceSelectionFinalizeHandler(w http.ResponseWriter, r *http.
 
 	// Check that all spots are filled.
 	for _, alliance := range web.arena.AllianceSelectionAlliances {
-		for _, allianceTeamId := range alliance.TeamIds {
-			if allianceTeamId <= 0 {
+		for i, allianceTeamId := range alliance.TeamIds {
+			if i == 0 && allianceTeamId <= 0 {
 				web.renderAllianceSelection(w, r, "Can't finalize alliance selection until all spots have been filled.")
 				return
 			}
