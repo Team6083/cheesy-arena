@@ -66,23 +66,19 @@ func (database *Database) GetEventSettings() (*EventSettings, error) {
 
 	// Database record doesn't exist yet; create it now.
 	eventSettings := EventSettings{
-		Name:                            "Untitled Event",
-		PlayoffType:                     DoubleEliminationPlayoff,
-		NumPlayoffAlliances:             8,
-		SelectionRound2Order:            "L",
-		SelectionRound3Order:            "",
-		SelectionShowUnpickedTeams:      false,
-		TbaDownloadEnabled:              true,
-		ApChannel:                       36,
-		WarmupDurationSec:               game.MatchTiming.WarmupDurationSec,
-		AutoDurationSec:                 game.MatchTiming.AutoDurationSec,
-		PauseDurationSec:                game.MatchTiming.PauseDurationSec,
-		TeleopDurationSec:               game.MatchTiming.TeleopDurationSec,
-		WarningRemainingDurationSec:     game.MatchTiming.WarningRemainingDurationSec,
-		MelodyBonusThresholdWithoutCoop: game.MelodyBonusThresholdWithoutCoop,
-		MelodyBonusThresholdWithCoop:    game.MelodyBonusThresholdWithCoop,
-		AmplificationNoteLimit:          game.AmplificationNoteLimit,
-		AmplificationDurationSec:        game.AmplificationDurationSec,
+		Name:                        "Untitled Event",
+		PlayoffType:                 DoubleEliminationPlayoff,
+		NumPlayoffAlliances:         8,
+		SelectionRound2Order:        "L",
+		SelectionRound3Order:        "",
+		SelectionShowUnpickedTeams:  false,
+		TbaDownloadEnabled:          true,
+		ApChannel:                   36,
+		WarmupDurationSec:           game.MatchTiming.WarmupDurationSec,
+		AutoDurationSec:             game.MatchTiming.AutoDurationSec,
+		PauseDurationSec:            game.MatchTiming.PauseDurationSec,
+		TeleopDurationSec:           game.MatchTiming.TeleopDurationSec,
+		WarningRemainingDurationSec: game.MatchTiming.WarningRemainingDurationSec,
 	}
 
 	if err := database.eventSettingsTable.create(&eventSettings); err != nil {

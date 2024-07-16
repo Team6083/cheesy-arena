@@ -116,7 +116,6 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 			switch command {
 			case "leave":
 				if args.TeamPosition >= 1 && args.TeamPosition <= 3 {
-					score.LeaveStatuses[args.TeamPosition-1] = !score.LeaveStatuses[args.TeamPosition-1]
 					scoreChanged = true
 				}
 			case "onStage":
@@ -140,12 +139,10 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 				}
 			case "microphone":
 				if args.StageIndex >= 0 && args.StageIndex <= 2 {
-					score.MicrophoneStatuses[args.StageIndex] = !score.MicrophoneStatuses[args.StageIndex]
 					scoreChanged = true
 				}
 			case "trap":
 				if args.StageIndex >= 0 && args.StageIndex <= 2 {
-					score.TrapStatuses[args.StageIndex] = !score.TrapStatuses[args.StageIndex]
 					scoreChanged = true
 				}
 			}

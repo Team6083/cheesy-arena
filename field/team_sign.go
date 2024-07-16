@@ -188,7 +188,7 @@ func generateInMatchRearText(isRed bool, countdown string, realtimeScore, oppone
 		allianceScores = fmt.Sprintf("Amp:%2d", realtimeScore.AmplifiedTimeRemainingSec)
 	}
 	return fmt.Sprintf(
-		"%s %02d/%02d %9s", countdown[1:], scoreSummary.NumNotes, scoreSummary.NumNotesGoal, allianceScores,
+		"%s %9s", countdown[1:], allianceScores,
 	)
 }
 

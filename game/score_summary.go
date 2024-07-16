@@ -5,30 +5,16 @@
 
 package game
 
-type ScoreSummary struct {
-	LeavePoints               int
-	AutoPoints                int
-	AmpPoints                 int
-	SpeakerPoints             int
-	StagePoints               int
-	MatchPoints               int
-	FoulPoints                int
-	Score                     int
-	CoopertitionCriteriaMet   bool
-	CoopertitionBonus         bool
-	NumNotes                  int
-	NumNotesGoal              int
-	MelodyBonusRankingPoint   bool
-	EnsembleBonusRankingPoint bool
-	BonusRankingPoints        int
-	NumOpponentTechFouls      int
+import "math/rand"
 
-	// Fields only needed for TBA.
-	ParkPoints      int
-	OnStagePoints   int
-	HarmonyPoints   int
-	SpotlightPoints int
-	TrapPoints      int
+type ScoreSummary struct {
+	CubePoints           int
+	ParkPoints           int
+	MatchPoints          int
+	FoulPoints           int
+	Score                int
+	BonusRankingPoints   int
+	NumOpponentTechFouls int
 }
 
 type MatchStatus int
@@ -58,12 +44,11 @@ func DetermineMatchStatus(redScoreSummary, blueScoreSummary *ScoreSummary, apply
 		); status != TieMatch {
 			return status
 		}
-		if status := comparePoints(redScoreSummary.AutoPoints, blueScoreSummary.AutoPoints); status != TieMatch {
+		if status := comparePoints(redScoreSummary.ParkPoints, blueScoreSummary.ParkPoints); status != TieMatch {
 			return status
 		}
-		if status := comparePoints(redScoreSummary.StagePoints, blueScoreSummary.StagePoints); status != TieMatch {
-			return status
-		}
+
+		return comparePoints(rand.Int(), rand.Int())
 	}
 
 	return TieMatch
