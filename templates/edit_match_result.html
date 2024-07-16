@@ -27,108 +27,54 @@
 <div id="scoreTemplate" style="display: none;">
   <div class="card card-body bg-{{"{{alliance}}"}} mb-3">
     <fieldset>
-      <legend>Autonomous</legend>
-      <h6 class="fw-bold mb-2">Leave</h6>
-      <div class="row mb-3">
-        {{range $i := seq 3}}
-          <div class="col-lg-2">
-            <label class="control-label">Team {{"{{team"}}{{$i}}{{"}}"}}</label>
-            <input type="checkbox" class="ms-3" name="{{"{{alliance}}"}}LeaveStatuses{{$i}}">
-          </div>
-        {{end}}
-      </div>
-      <h6 class="fw-bold mb-2">Notes Scored</h6>
-      <div class="row">
-        <label class="col-lg-1 text-end">Amp:</label>
-        <div class="col-lg-1">
-          <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}AutoAmpNotes">
-        </div>
-        <label class="col-lg-1 text-end">Speaker:</label>
-        <div class="col-lg-1">
-          <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}AutoSpeakerNotes">
-        </div>
-      </div>
-    </fieldset>
-    <fieldset>
       <legend>Teleoperated</legend>
-      <h6 class="fw-bold mb-2">Coopertition</h6>
+      <h6 class="fw-bold mb-2">Cubes</h6>
       <div class="row mb-3">
-        <div class="col-lg-2">
-          <label class="control-label">Activated</label>
-          <input type="checkbox" class="ms-3" name="{{"{{alliance}}"}}CoopActivated">
+        <label class="col-lg-1 text-end align-self-center">Lv 0:</label>
+        <div class="col-lg-1">
+          <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}CubeLv0">
+        </div>
+        <label class="col-lg-1 text-end align-self-center">Lv 1:</label>
+        <div class="col-lg-1">
+          <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}CubeLv1">
+        </div>
+        <label class="col-lg-1 text-end align-self-center">Lv 2:</label>
+        <div class="col-lg-1">
+          <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}CubeLv2">
+        </div>
+        <label class="col-lg-1 text-end align-self-center">Lv 3:</label>
+        <div class="col-lg-1">
+          <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}CubeLv3">
+        </div>
+        <label class="col-lg-1 text-end align-self-center">Lv 4:</label>
+        <div class="col-lg-1">
+          <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}CubeLv4">
         </div>
       </div>
-      <h6 class="fw-bold mb-2">Notes Scored</h6>
+      <h6 class="fw-bold mb-2">Cube Scored</h6>
       <div class="row">
-        <label class="col-lg-1 text-end">Amp:</label>
+        <label class="col-lg-2 text-end align-self-center">6083 Cubes:</label>
         <div class="col-lg-1">
-          <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}TeleopAmpNotes">
-        </div>
-        <label class="col-lg-2 text-end">Speaker Unamplified:</label>
-        <div class="col-lg-1">
-          <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}TeleopUnamplifiedSpeakerNotes">
-        </div>
-        <label class="col-lg-2 text-end">Speaker Amplified:</label>
-        <div class="col-lg-1">
-          <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}TeleopAmplifiedSpeakerNotes">
+          <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}CubeBonus">
         </div>
       </div>
     </fieldset>
     <fieldset>
       <legend>Endgame</legend>
-      <h6 class="fw-bold mb-2">Robots On Stage</h6>
+      <h6 class="fw-bold mb-2">Robots Park</h6>
       <div class="mb-3">
         {{range $i := seq 3}}
           <div class="row mb-2">
             <div class="col-lg-1"></div>
-            <label class="col-lg-1 control-label">Team {{"{{team"}}{{$i}}{{"}}"}}</label>
-            <div class="col-lg-1">
+            <label class="col-lg-2 control-label">Team {{"{{team"}}{{$i}}{{"}}"}}</label>
+            <div class="col-lg-2">
               <input type="radio" name="{{"{{alliance}}"}}EndgameStatuses{{$i}}" value="0"> None
             </div>
             <div class="col-lg-2">
               <input type="radio" name="{{"{{alliance}}"}}EndgameStatuses{{$i}}" value="1"> Parked
             </div>
-            <div class="col-lg-2">
-              <input type="radio" name="{{"{{alliance}}"}}EndgameStatuses{{$i}}" value="2"> Stage Left
-            </div>
-            <div class="col-lg-2">
-              <input type="radio" name="{{"{{alliance}}"}}EndgameStatuses{{$i}}" value="3"> Center Stage
-            </div>
-            <div class="col-lg-2">
-              <input type="radio" name="{{"{{alliance}}"}}EndgameStatuses{{$i}}" value="4"> Stage Right
-            </div>
           </div>
         {{end}}
-      </div>
-      <h6 class="fw-bold mb-2">High Notes on Microphones</h6>
-      <div class="row mb-3">
-        <div class="col-lg-2">
-          <label class="control-label">Stage Left</label>
-          <input type="checkbox" class="ms-3" name="{{"{{alliance}}"}}MicrophoneStatuses1">
-        </div>
-        <div class="col-lg-2">
-          <label class="control-label">Center Stage</label>
-          <input type="checkbox" class="ms-3" name="{{"{{alliance}}"}}MicrophoneStatuses2">
-        </div>
-        <div class="col-lg-2">
-          <label class="control-label">Stage Right</label>
-          <input type="checkbox" class="ms-3" name="{{"{{alliance}}"}}MicrophoneStatuses3">
-        </div>
-      </div>
-      <h6 class="fw-bold mb-2">Notes in Traps</h6>
-      <div class="row mb-3">
-        <div class="col-lg-2">
-          <label class="control-label">Stage Left</label>
-          <input type="checkbox" class="ms-3" name="{{"{{alliance}}"}}TrapStatuses1">
-        </div>
-        <div class="col-lg-2">
-          <label class="control-label">Center Stage</label>
-          <input type="checkbox" class="ms-3" name="{{"{{alliance}}"}}TrapStatuses2">
-        </div>
-        <div class="col-lg-2">
-          <label class="control-label">Stage Right</label>
-          <input type="checkbox" class="ms-3" name="{{"{{alliance}}"}}TrapStatuses3">
-        </div>
       </div>
     </fieldset>
     <fieldset>

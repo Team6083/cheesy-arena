@@ -31,20 +31,21 @@ const renderResults = function(alliance) {
   $("#" + alliance + "Score").html(scoreContent);
 
   // Set the values of the form fields from the JSON results data.
-  getInputElement(alliance, "CoopActivated").prop("checked", result.score.AmpSpeaker.CoopActivated);
-  getInputElement(alliance, "AutoAmpNotes").val(result.score.AmpSpeaker.AutoAmpNotes);
-  getInputElement(alliance, "AutoSpeakerNotes").val(result.score.AmpSpeaker.AutoSpeakerNotes);
-  getInputElement(alliance, "TeleopAmpNotes").val(result.score.AmpSpeaker.TeleopAmpNotes);
-  getInputElement(alliance, "TeleopUnamplifiedSpeakerNotes").val(result.score.AmpSpeaker.TeleopUnamplifiedSpeakerNotes);
-  getInputElement(alliance, "TeleopAmplifiedSpeakerNotes").val(result.score.AmpSpeaker.TeleopAmplifiedSpeakerNotes);
+  getInputElement(alliance, "CubeBonus").val(result.score.CubeBonus);
+
+  const cubes = result.score.Cubes ?? [];
+  for (let i = 0; i < 5; i++) {
+    let tmp = cubes[i];
+    if (typeof tmp != "number") {
+      tmp = 0;
+    }
+    getInputElement(alliance, "CubeLv"+i).val(tmp)
+  }
 
   for (let i = 0; i < 3; i++) {
     const i1 = i + 1;
 
-    getInputElement(alliance, "LeaveStatuses" + i1).prop("checked", result.score.LeaveStatuses[i]);
     getInputElement(alliance, "EndgameStatuses" + i1, result.score.EndgameStatuses[i]).prop("checked", true);
-    getInputElement(alliance, "MicrophoneStatuses" + i1).prop("checked", result.score.MicrophoneStatuses[i]);
-    getInputElement(alliance, "TrapStatuses" + i1).prop("checked", result.score.TrapStatuses[i]);
   }
 
   if (result.score.Fouls != null) {
@@ -70,25 +71,17 @@ const updateResults = function(alliance) {
     formData[v.name] = v.value;
   });
 
-  result.score.LeaveStatuses = [];
-  result.score.AmpSpeaker = {
-    CoopActivated: formData[alliance + "CoopActivated"] === "on",
-    AutoAmpNotes: parseInt(formData[alliance + "AutoAmpNotes"]),
-    AutoSpeakerNotes: parseInt(formData[alliance + "AutoSpeakerNotes"]),
-    TeleopAmpNotes: parseInt(formData[alliance + "TeleopAmpNotes"]),
-    TeleopUnamplifiedSpeakerNotes: parseInt(formData[alliance + "TeleopUnamplifiedSpeakerNotes"]),
-    TeleopAmplifiedSpeakerNotes: parseInt(formData[alliance + "TeleopAmplifiedSpeakerNotes"]),
-  };
+  result.score.Cubes = []
+  for (let i = 0; i < 5; i++) {
+    let cube = parseInt(formData[alliance + "CubeLv"+i]);
+    if (isNaN(cube)) cube = 0;
+    result.score.Cubes.push(cube)
+  }
+  result.score.CubeBonus = parseInt(formData[alliance + "CubeBonus"])
   result.score.EndgameStatuses = [];
-  result.score.MicrophoneStatuses = [];
-  result.score.TrapStatuses = [];
   for (let i = 0; i < 3; i++) {
     const i1 = i + 1;
-
-    result.score.LeaveStatuses[i] = formData[alliance + "LeaveStatuses" + i1] === "on";
     result.score.EndgameStatuses[i] = parseInt(formData[alliance + "EndgameStatuses" + i1]);
-    result.score.MicrophoneStatuses[i] = formData[alliance + "MicrophoneStatuses" + i1] === "on";
-    result.score.TrapStatuses[i] = formData[alliance + "TrapStatuses" + i1] === "on";
   }
 
   result.score.Fouls = [];
