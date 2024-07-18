@@ -142,3 +142,41 @@ body {
   left: 12.2vw;
   width: 9vw;
 }
+
+.cube-level {
+  justify-content: center;
+  font-size: 3vw;
+  font-weight: bold;
+
+  width: 12vw;
+  height: 3.3vw;
+  display: flex;
+  align-items: center;
+  margin: 0.4vw 0.2vw;
+}
+
+.cube-field {
+  justify-content: center;
+  width: 12vw;
+  height: 3.3vw;
+  align-items: center;
+  margin: 0.4vw 0.2vw;
+}
+
+.cube-field>div {
+  text-align: center;
+}
+
+.cube-btn {
+  background-color: #333;
+  padding: 5px 10px;
+  border-radius: 2px;
+}
+
+.cube-btn.cube-minus {
+  background-color: #dc3545;
+}
+
+.cube-btn.cube-add {
+  background-color: #198754;
+}

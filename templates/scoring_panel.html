@@ -11,38 +11,50 @@
   <div class="scoring-section">
     <div class="scoring-header">
       <div>&nbsp;</div>
-      <div>Leave</div>
+      <div>Parked</div>
     </div>
     {{range $i := seq 3}}
       <div>
         <div class="team team-{{$i}} robot-field"></div>
-        <div id="leaveStatus{{$i}}" class="boolean robot-field" onclick="handleClick('leave', {{$i}});">
+        <div id="endgameStatus{{$i}}" class="boolean robot-field" onclick="handleClick('park', {{$i}});">
           <div class="value"></div>
         </div>
       </div>
     {{end}}
   </div>
-  <div id="stage">
-    <svg id="stageGraphic" viewBox="0 4 100 90">
-      <polygon points="5,5 95,5 50,78" fill="none" stroke="currentColor" stroke-width="0.2" />
-      <text x="50" y="7.5" text-anchor="middle" font-size="2" fill="currentColor">Center</text>
-      <text x="50" y="9.5" text-anchor="middle" font-size="2" fill="currentColor">Stage</text>
-      <text x="30" y="38" text-anchor="middle" font-size="2" fill="currentColor">Stage</text>
-      <text x="30" y="40" text-anchor="middle" font-size="2" fill="currentColor">Left</text>
-      <text x="69" y="38" text-anchor="middle" font-size="2" fill="currentColor">Stage</text>
-      <text x="69" y="40" text-anchor="middle" font-size="2" fill="currentColor">Right</text>
-      <text x="50" y="15" text-anchor="middle" font-size="2" fill="currentColor">Park</text>
-      <line x1="5" y1="85" x2="95" y2="85" stroke="currentColor" stroke-width="0.2" />
-      <text x="50" y="87.5" text-anchor="middle" font-size="2" fill="currentColor">Alliance Wall</text>
-    </svg>
-    <div id="stageLeft" class="stage-side">{{template "stageSide" dict "index" 0}}</div>
-    <div id="centerStage" class="stage-side">{{template "stageSide" dict "index" 1}}</div>
-    <div id="stageRight" class="stage-side">{{template "stageSide" dict "index" 2}}</div>
-    <div id="park" class="stage-side">
-      <div class="stage-side-col">
-        <div id="parkTeam1" class="team-1 boolean" onclick="handleClick('park', 1);"></div>
-        <div id="parkTeam2" class="team-2 boolean" onclick="handleClick('park', 2);"></div>
-        <div id="parkTeam3" class="team-3 boolean" onclick="handleClick('park', 3);"></div>
+  <div class="scoring-section">
+    <div class="scoring-header">
+      <div> </div>
+      <div>Cubes</div>
+    </div>
+    {{range $i := seq 5}}
+      <div>
+        <div class="cube-level">Lv{{$i}}</div>
+        <div id="cubes{{$i}}" class="cube-field row">
+          <div class="col">
+            <div class="cube-btn cube-minus" onclick="handleClick('cube_minus', 0, {{$i}});">-</div>
+          </div>
+          <div class="value col"></div>
+          <div class="col">
+            <div class="cube-btn cube-add" onclick="handleClick('cube_add', 0, {{$i}});">+</div>
+          </div>
+        </div>
+      </div>
+    {{end}}
+  </div>
+  <div class="scoring-section mt-3">
+    <div class="scoring-header">
+      <div>Cube Bonus</div>
+    </div>
+    <div>
+      <div id="cubeBonus" class="cube-field row">
+        <div class="col">
+          <div class="cube-btn cube-minus" onclick="handleClick('cube_bonus_minus');">-</div>
+        </div>
+        <div class="value col"></div>
+        <div class="col">
+          <div class="cube-btn cube-add" onclick="handleClick('cube_bonus_add');">+</div>
+        </div>
       </div>
     </div>
   </div>

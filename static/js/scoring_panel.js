@@ -50,20 +50,23 @@ const handleRealtimeScore = function(data) {
 
   for (let i = 0; i < 3; i++) {
     const i1 = i + 1;
-    $(`#leaveStatus${i1}>.value`).text(score.LeaveStatuses[i] ? "Yes" : "No");
-    $(`#leaveStatus${i1}`).attr("data-value", score.LeaveStatuses[i]);
-    $(`#parkTeam${i1}`).attr("data-value", score.EndgameStatuses[i] === 1);
-    $(`#stageSide0Team${i1}`).attr("data-value", score.EndgameStatuses[i] === 2);
-    $(`#stageSide1Team${i1}`).attr("data-value", score.EndgameStatuses[i] === 3);
-    $(`#stageSide2Team${i1}`).attr("data-value", score.EndgameStatuses[i] === 4);
-    $(`#stageSide${i}Microphone`).attr("data-value", score.MicrophoneStatuses[i]);
-    $(`#stageSide${i}Trap`).attr("data-value", score.TrapStatuses[i]);
+    const parked = score.EndgameStatuses[i] === 1;
+
+    $(`#endgameStatus${i1}>.value`).text(parked ? "Yes" : "No");
+    $(`#endgameStatus${i1}`).attr("data-value", parked);
   }
+
+  for (let i = 0; i < 5; i++) {
+    const i1 = i + 1;
+    $(`#cubes${i1}>.value`).text(score.Cubes[i]);
+  }
+
+  $(`#cubeBonus>.value`).text(score.CubeBonus);
 };
 
 // Handles an element click and sends the appropriate websocket message.
-const handleClick = function(command, teamPosition = 0, stageIndex = 0) {
-  websocket.send(command, {TeamPosition: teamPosition, StageIndex: stageIndex});
+const handleClick = function(command, teamPosition = 0, cubeIndex = 0) {
+  websocket.send(command, {TeamPosition: teamPosition, CubeIndex: cubeIndex});
 };
 
 // Sends a websocket message to indicate that the score for this alliance is ready.

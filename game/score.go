@@ -6,7 +6,7 @@
 package game
 
 type Score struct {
-	Cubes           []int
+	Cubes           [5]int
 	CubeBonus       int
 	EndgameStatuses [3]EndgameStatus
 	Fouls           []Foul

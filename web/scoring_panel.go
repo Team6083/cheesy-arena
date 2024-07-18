@@ -105,7 +105,7 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 		} else {
 			args := struct {
 				TeamPosition int
-				StageIndex   int
+				CubeIndex    int
 			}{}
 			err = mapstructure.Decode(data, &args)
 			if err != nil {
@@ -114,18 +114,22 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 			}
 
 			switch command {
-			case "leave":
-				if args.TeamPosition >= 1 && args.TeamPosition <= 3 {
+			case "cube_add":
+				if args.CubeIndex >= 1 && args.CubeIndex <= 5 {
+					score.Cubes[args.CubeIndex-1] += 1
 					scoreChanged = true
 				}
-			case "onStage":
-				if args.TeamPosition >= 1 && args.TeamPosition <= 3 && args.StageIndex >= 0 && args.StageIndex <= 2 {
-					endgameStatus := game.EndgameStatus(args.StageIndex + 2)
-					if score.EndgameStatuses[args.TeamPosition-1] == endgameStatus {
-						score.EndgameStatuses[args.TeamPosition-1] = game.EndgameNone
-					} else {
-						score.EndgameStatuses[args.TeamPosition-1] = endgameStatus
-					}
+			case "cube_minus":
+				if args.CubeIndex >= 1 && args.CubeIndex <= 5 && score.Cubes[args.CubeIndex-1]-1 >= 0 {
+					score.Cubes[args.CubeIndex-1] -= 1
+					scoreChanged = true
+				}
+			case "cube_bonus_add":
+				score.CubeBonus += 1
+				scoreChanged = true
+			case "cube_bonus_minus":
+				if score.CubeBonus-1 >= 0 {
+					score.CubeBonus -= 1
 					scoreChanged = true
 				}
 			case "park":
@@ -135,14 +139,6 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 					} else {
 						score.EndgameStatuses[args.TeamPosition-1] = game.EndgameParked
 					}
-					scoreChanged = true
-				}
-			case "microphone":
-				if args.StageIndex >= 0 && args.StageIndex <= 2 {
-					scoreChanged = true
-				}
-			case "trap":
-				if args.StageIndex >= 0 && args.StageIndex <= 2 {
 					scoreChanged = true
 				}
 			}
