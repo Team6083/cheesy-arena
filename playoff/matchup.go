@@ -13,18 +13,20 @@ import (
 )
 
 type Matchup struct {
-	id                         string
-	NumWinsToAdvance           int
-	redAllianceSource          allianceSource
-	blueAllianceSource         allianceSource
-	matchSpecs                 []*matchSpec
-	RedAllianceId              int
-	BlueAllianceId             int
-	RedAllianceWins            int
-	BlueAllianceWins           int
-	NumMatchesPlayed           int
-	winningAllianceDestination MatchGroup
-	losingAllianceDestination  MatchGroup
+	id                          string
+	NumWinsToAdvance            int
+	redAllianceSource           allianceSource
+	blueAllianceSource          allianceSource
+	matchSpecs                  []*matchSpec
+	RedAllianceId               int
+	BlueAllianceId              int
+	RedAllianceWins             int
+	BlueAllianceWins            int
+	NumMatchesPlayed            int
+	winningAllianceDestinations []MatchGroup
+	losingAllianceDestinations  []MatchGroup
+
+	triCycles []*TriCycle
 }
 
 func (matchup *Matchup) Id() string {
@@ -39,6 +41,10 @@ func (matchup *Matchup) update(playoffMatchResults map[int]playoffMatchResult) {
 	// Update child matchups first.
 	matchup.redAllianceSource.update(playoffMatchResults)
 	matchup.blueAllianceSource.update(playoffMatchResults)
+
+	for _, triCycle := range matchup.triCycles {
+		triCycle.update(playoffMatchResults)
+	}
 
 	// Populate the alliance IDs from the lower matchups (or with a zero value if they are not yet complete).
 	matchup.RedAllianceId = matchup.redAllianceSource.AllianceId()
@@ -101,6 +107,11 @@ func (matchup *Matchup) traverse(visitFunction func(MatchGroup) error) error {
 	}
 	if err := matchup.blueAllianceSource.traverse(visitFunction); err != nil {
 		return err
+	}
+	for _, triCycle := range matchup.triCycles {
+		if err := triCycle.traverse(visitFunction); err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -198,14 +209,25 @@ func (matchup *Matchup) allianceDestination(allianceId int) string {
 		}
 	}
 
+	var advDestinations []MatchGroup
 	if matchup.WinningAllianceId() == allianceId {
-		return fmt.Sprintf("Advances to %s", formatDestinationMatchName(matchup.winningAllianceDestination))
+		advDestinations = matchup.winningAllianceDestinations
 	} else {
-		if matchup.losingAllianceDestination == nil {
-			return "Eliminated"
-		}
-		return fmt.Sprintf("Advances to %s", formatDestinationMatchName(matchup.losingAllianceDestination))
+		advDestinations = matchup.losingAllianceDestinations
 	}
+
+	if len(advDestinations) == 0 {
+		return "Eliminated"
+	}
+
+	advString := ""
+	for i, dst := range advDestinations {
+		if i != 0 {
+			advString += ", "
+		}
+		advString += formatDestinationMatchName(dst)
+	}
+	return fmt.Sprintf("Advances to %s", advString)
 }
 
 // Returns a string representation of the first match from the given matchup.

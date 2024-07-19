@@ -73,11 +73,20 @@ func (source matchupSource) displayName() string {
 }
 
 func (source matchupSource) setDestination(destination MatchGroup) {
+	var advDestinations *[]MatchGroup
 	if source.useWinner {
-		source.matchup.winningAllianceDestination = destination
+		advDestinations = &source.matchup.winningAllianceDestinations
 	} else {
-		source.matchup.losingAllianceDestination = destination
+		advDestinations = &source.matchup.losingAllianceDestinations
 	}
+
+	for _, match := range *advDestinations {
+		if match.Id() == destination.Id() {
+			return
+		}
+	}
+
+	*advDestinations = append(*advDestinations, destination)
 
 	// Recurse down through the playoff tournament tree.
 	source.matchup.setSourceDestinations()

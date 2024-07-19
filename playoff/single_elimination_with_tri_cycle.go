@@ -7,13 +7,14 @@ package playoff
 
 import (
 	"fmt"
+	"github.com/Team254/cheesy-arena/model"
 )
 
 // Creates a single-elimination bracket containing only the required matchups for the given number of alliances, and
 // returns the root matchup comprising the tournament finals along with scheduled breaks.
-func newSingleEliminationWithTriCycleBracket(numAlliances int) (*Matchup, *TriCycle, []breakSpec, error) {
+func newSingleEliminationWithTriCycleBracket(numAlliances int) (*Matchup, []breakSpec, error) {
 	if numAlliances != 5 {
-		return nil, nil, nil, fmt.Errorf("single-elimination bracket must have at least 2 alliances")
+		return nil, nil, fmt.Errorf("single-elimination bracket must have at least 2 alliances")
 	}
 
 	// Define semifinal matches.
@@ -40,20 +41,33 @@ func newSingleEliminationWithTriCycleBracket(numAlliances int) (*Matchup, *TriCy
 		},
 	}
 
-	tricycle := TriCycle{
-		id: "TRI",
-		alliances: [3]allianceSource{
-			newSingleEliminationLooseAllianceSource(&sf1, numAlliances),
-			newSingleEliminationLooseAllianceSource(&sf2, numAlliances),
-			allianceSelectionSource{5},
-		},
+	tri1 := TriCycle{
+		id:                 "TRI1",
+		redAllianceSource:  allianceSelectionSource{5},
+		blueAllianceSource: newSingleEliminationLooseAllianceSource(&sf1, numAlliances),
 		matchSpecs: []*matchSpec{
 			newSingleEliminationTriCycleMatch("TriCycle", "TRI", 1, 1, 43),
-			newSingleEliminationTriCycleMatch("TriCycle", "TRI", 2, 1, 44),
-			newSingleEliminationTriCycleMatch("TriCycle", "TRI", 3, 1, 45),
 			newSingleEliminationTriCycleMatch("TriCycle", "TRI", 1, 2, 46),
+		},
+	}
+
+	tri2 := TriCycle{
+		id:                 "TRI2",
+		redAllianceSource:  allianceSelectionSource{5},
+		blueAllianceSource: newSingleEliminationLooseAllianceSource(&sf2, numAlliances),
+		matchSpecs: []*matchSpec{
+			newSingleEliminationTriCycleMatch("TriCycle", "TRI", 2, 1, 44),
 			newSingleEliminationTriCycleMatch("TriCycle", "TRI", 2, 2, 47),
-			newSingleEliminationTriCycleMatch("TriCycle", "TRI", 3, 3, 48),
+		},
+	}
+
+	tri3 := TriCycle{
+		id:                 "TRI3",
+		redAllianceSource:  newSingleEliminationLooseAllianceSource(&sf1, numAlliances),
+		blueAllianceSource: newSingleEliminationLooseAllianceSource(&sf2, numAlliances),
+		matchSpecs: []*matchSpec{
+			newSingleEliminationTriCycleMatch("TriCycle", "TRI", 3, 1, 45),
+			newSingleEliminationTriCycleMatch("TriCycle", "TRI", 3, 2, 48),
 		},
 	}
 
@@ -64,6 +78,8 @@ func newSingleEliminationWithTriCycleBracket(numAlliances int) (*Matchup, *TriCy
 		redAllianceSource:  newSingleEliminationAllianceSource(&sf1, numAlliances),
 		blueAllianceSource: newSingleEliminationAllianceSource(&sf2, numAlliances),
 		matchSpecs:         newFinalMatches(49),
+
+		triCycles: []*TriCycle{&tri1, &tri2, &tri3},
 	}
 
 	// Define scheduled breaks.
@@ -71,7 +87,7 @@ func newSingleEliminationWithTriCycleBracket(numAlliances int) (*Matchup, *TriCy
 	breakSpecs = append(breakSpecs, breakSpec{50, 480, "Field Break"})
 	breakSpecs = append(breakSpecs, breakSpec{51, 480, "Field Break"})
 
-	return &final, &tricycle, breakSpecs, nil
+	return &final, breakSpecs, nil
 }
 
 // Helper method to create an allianceSource while pruning any unnecessary matchups due to the number of alliances.
@@ -94,6 +110,7 @@ func newSingleEliminationTriCycleMatch(longRoundName, shortRoundName string, set
 		shortName:           fmt.Sprintf("%s%d-%d", shortRoundName, setNumber, matchNumber),
 		order:               order,
 		durationSec:         600,
-		useTiebreakCriteria: true,
+		useTiebreakCriteria: false,
+		tbaMatchKey:         model.TbaMatchKey{"tri", setNumber, matchNumber},
 	}
 }
