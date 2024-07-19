@@ -43,13 +43,21 @@
                   Single-Elimination (2-16 alliances)
                 </label>
               </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="playoffType" value="SingleEliminationWithTriCyclePlayoff"
+                         onclick="updateNumPlayoffAlliances(false, true);"
+                         {{if eq .PlayoffType 2}}checked{{end}}>
+                  Single-Elimination With Tri Cycle (5 alliances)
+                </label>
+              </div>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-lg-6 control-label">Number of Alliances</label>
             <div class="col-lg-6">
               <input type="text" class="form-control" name="numPlayoffAlliances" value="{{.NumPlayoffAlliances}}"
-                  {{if eq .PlayoffType 0}}disabled{{end}}>
+                  {{if or (eq .PlayoffType 0) (eq .PlayoffType 2)}}disabled{{end}}>
             </div>
           </div>
           <div class="row mb-3">
@@ -491,11 +499,14 @@
 {{end}}
 {{define "script"}}
 <script>
-  updateNumPlayoffAlliances = function(isDoubleElimination) {
+  updateNumPlayoffAlliances = function(isDoubleElimination, isTri = false) {
     const numPlayoffAlliances = $("input[name=numPlayoffAlliances]");
-    numPlayoffAlliances.prop("disabled", isDoubleElimination);
+    numPlayoffAlliances.prop("disabled", isDoubleElimination || isTri);
     if (isDoubleElimination) {
       numPlayoffAlliances.val(8);
+    }
+    if (isTri) {
+      numPlayoffAlliances.val(5);
     }
   };
 </script>

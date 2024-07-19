@@ -51,6 +51,9 @@ func (web *Web) settingsPostHandler(w http.ResponseWriter, r *http.Request) {
 			web.renderSettings(w, r, "Number of alliances must be between 2 and 16.")
 			return
 		}
+	} else if r.PostFormValue("playoffType") == "SingleEliminationWithTriCyclePlayoff" {
+		playoffType = model.SingleEliminationWithTriCyclePlayoff
+		numAlliances = 5
 	} else {
 		playoffType = model.DoubleEliminationPlayoff
 		numAlliances = 8

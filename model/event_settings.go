@@ -12,6 +12,7 @@ type PlayoffType int
 const (
 	DoubleEliminationPlayoff PlayoffType = iota
 	SingleEliminationPlayoff
+	SingleEliminationWithTriCyclePlayoff
 )
 
 type EventSettings struct {
