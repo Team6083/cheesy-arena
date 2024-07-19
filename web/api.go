@@ -301,6 +301,10 @@ func (web *Web) generateBracketSvg(w io.Writer, activeMatch *model.Match) error 
 		}
 	}
 
+	if web.arena.EventSettings.PlayoffType == model.SingleEliminationWithTriCyclePlayoff {
+		bracketType = "4"
+	}
+
 	template, err := web.parseFiles("templates/bracket.svg")
 	if err != nil {
 		return err

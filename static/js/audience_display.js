@@ -167,7 +167,6 @@ const handleRealtimeScore = function(data) {
 
 // Handles a websocket message to populate the final score data.
 const handleScorePosted = function(data) {
-  console.log(data);
   $(`#${redSide}FinalScore`).text(data.RedScoreSummary.Score);
   $(`#${redSide}FinalAlliance`).text("Alliance " + data.Match.PlayoffRedAlliance);
   setTeamInfo(redSide, 1, data.Match.Red1, data.RedCards, data.RedRankings);
