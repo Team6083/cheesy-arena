@@ -26,7 +26,7 @@ func (web *Web) scheduleGetHandler(w http.ResponseWriter, r *http.Request) {
 
 	matchTypeString := getMatchType(r)
 	matchType, _ := model.MatchTypeFromString(matchTypeString)
-	if matchType != model.Practice && matchType != model.Qualification {
+	if matchType != model.Practice && matchType != model.Qualification && matchType != model.Playoff {
 		http.Redirect(w, r, "/setup/schedule?matchType=practice", 302)
 		return
 	}
@@ -64,6 +64,11 @@ func (web *Web) scheduleGeneratePostHandler(w http.ResponseWriter, r *http.Reque
 	}
 	if err != nil {
 		web.renderSchedule(w, r, "Incomplete or invalid schedule block parameters specified.")
+		return
+	}
+
+	if matchType == model.Playoff {
+		http.Redirect(w, r, "/setup/schedule?matchType="+matchTypeString, 303)
 		return
 	}
 

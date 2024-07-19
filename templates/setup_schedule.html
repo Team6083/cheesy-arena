@@ -37,6 +37,14 @@
                   Qualification
                 </label>
               </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="matchType" value="playoff"
+                         onchange="window.location = '/setup/schedule?matchType=playoff';"
+                         {{if eq .MatchType playoffMatch}}checked{{end}}>
+                  Playoff
+                </label>
+              </div>
             </div>
           </div>
           <div id="blockContainer"></div>

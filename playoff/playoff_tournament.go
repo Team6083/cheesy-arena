@@ -6,6 +6,7 @@
 package playoff
 
 import (
+	"errors"
 	"fmt"
 	"github.com/Team254/cheesy-arena/game"
 	"github.com/Team254/cheesy-arena/model"
@@ -18,6 +19,10 @@ type PlayoffTournament struct {
 	breakSpecs   []breakSpec
 	finalMatchup *Matchup
 }
+
+var (
+	errScheduleBlockShortage = errors.New("schedule blocks not enough")
+)
 
 // NewPlayoffTournament creates a new playoff tournament of the given type and number of alliances, or returns an error
 // if the number of alliances is invalid for the given tournament type.
@@ -117,8 +122,14 @@ func (tournament *PlayoffTournament) CreateMatchesAndBreaks(database *model.Data
 		return err
 	}
 
+	scheduleBlocks, err := database.GetScheduleBlocksByMatchType(model.Playoff)
+	if err != nil {
+		return err
+	}
+
 	breakIndex := 0
 	matchIndex := 0
+	scheduleBlockIndex := 0
 	nextEventTime := startTime
 
 	for matchIndex < len(tournament.matchSpecs) {
@@ -126,6 +137,10 @@ func (tournament *PlayoffTournament) CreateMatchesAndBreaks(database *model.Data
 		for breakIndex < len(tournament.breakSpecs) &&
 			tournament.breakSpecs[breakIndex].orderBefore < tournament.matchSpecs[matchIndex].order {
 			breakIndex++
+		}
+
+		if scheduleBlockIndex >= len(scheduleBlocks) {
+			return errScheduleBlockShortage
 		}
 
 		if breakIndex < len(tournament.breakSpecs) &&
@@ -144,6 +159,11 @@ func (tournament *PlayoffTournament) CreateMatchesAndBreaks(database *model.Data
 			}
 			breakIndex++
 			nextEventTime = nextEventTime.Add(time.Duration(breakSpec.durationSec) * time.Second)
+
+			nextEventTime, scheduleBlockIndex = checkNextEventTimeWithScheduleBlocks(nextEventTime, scheduleBlocks, scheduleBlockIndex)
+			if scheduleBlockIndex == -1 {
+				return errScheduleBlockShortage
+			}
 		}
 
 		matchSpec := tournament.matchSpecs[matchIndex]
@@ -178,6 +198,11 @@ func (tournament *PlayoffTournament) CreateMatchesAndBreaks(database *model.Data
 
 		matchIndex++
 		nextEventTime = nextEventTime.Add(time.Duration(matchSpec.durationSec) * time.Second)
+
+		nextEventTime, scheduleBlockIndex = checkNextEventTimeWithScheduleBlocks(nextEventTime, scheduleBlocks, scheduleBlockIndex)
+		if scheduleBlockIndex == -1 {
+			return errScheduleBlockShortage
+		}
 	}
 
 	return nil
@@ -264,4 +289,18 @@ func positionBlueTeams(match *model.Match, alliance *model.Alliance) {
 	match.Blue1 = alliance.Lineup[0]
 	match.Blue2 = alliance.Lineup[1]
 	match.Blue3 = alliance.Lineup[2]
+}
+
+func checkNextEventTimeWithScheduleBlocks(nextEventTime time.Time, scheduleBlocks []model.ScheduleBlock, index int) (time.Time, int) {
+	block := scheduleBlocks[index]
+	scheduleBlockEndTime := block.StartTime.Add(time.Second * time.Duration(block.MatchSpacingSec*block.NumMatches))
+	if nextEventTime.After(scheduleBlockEndTime) {
+		index++
+		if index >= len(scheduleBlocks) {
+			return time.Time{}, -1
+		}
+		nextEventTime = scheduleBlocks[index].StartTime
+	}
+
+	return nextEventTime, index
 }
