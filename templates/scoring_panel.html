@@ -8,16 +8,42 @@
 {{define "body"}}
 <div id="matchName">&nbsp;</div>
 <div id="alliance">
+  <div class="scoring-section mt-5">
+    <div class="scoring-header">
+      <div> </div>
+      <div>Push Zone</div>
+    </div>
+    {{range $i := seq 2}}
+    <div class="num-field">
+      <div class="cube-level">Zone {{$i}}</div>
+      <div id="pushCubes{{$i}}" class="cube-field row">
+        <div class="col">
+          <div class="cube-btn cube-minus" onclick="handleClick('push_minus', 0, {{$i}});">-</div>
+        </div>
+        <div class="value col"></div>
+        <div class="col">
+          <div class="cube-btn cube-add" onclick="handleClick('push_add', 0, {{$i}});">+</div>
+        </div>
+      </div>
+    </div>
+    {{end}}
+  </div>
   <div class="scoring-section">
     <div class="scoring-header">
-      <div>&nbsp;</div>
-      <div>Parked</div>
+      <div> </div>
+      <div>Collection</div>
     </div>
-    {{range $i := seq 3}}
-      <div>
-        <div class="team team-{{$i}} robot-field"></div>
-        <div id="endgameStatus{{$i}}" class="boolean robot-field" onclick="handleClick('park', {{$i}});">
-          <div class="value"></div>
+    {{range $i := seq 5}}
+      <div class="num-field">
+        <div class="cube-level">Level {{$i}}</div>
+        <div id="collectionCubes{{$i}}" class="cube-field row">
+          <div class="col">
+            <div class="cube-btn cube-minus" onclick="handleClick('collection_minus', 0, {{$i}});">-</div>
+          </div>
+          <div class="value col"></div>
+          <div class="col">
+            <div class="cube-btn cube-add" onclick="handleClick('collection_add', 0, {{$i}});">+</div>
+          </div>
         </div>
       </div>
     {{end}}
@@ -25,38 +51,46 @@
   <div class="scoring-section">
     <div class="scoring-header">
       <div> </div>
-      <div>Cubes</div>
+      <div>Bonus</div>
     </div>
-    {{range $i := seq 5}}
-      <div>
-        <div class="cube-level">Lv{{$i}}</div>
-        <div id="cubes{{$i}}" class="cube-field row">
-          <div class="col">
-            <div class="cube-btn cube-minus" onclick="handleClick('cube_minus', 0, {{$i}});">-</div>
-          </div>
-          <div class="value col"></div>
-          <div class="col">
-            <div class="cube-btn cube-add" onclick="handleClick('cube_add', 0, {{$i}});">+</div>
-          </div>
-        </div>
-      </div>
-    {{end}}
-  </div>
-  <div class="scoring-section mt-3">
-    <div class="scoring-header">
-      <div>Cube Bonus</div>
-    </div>
-    <div>
-      <div id="cubeBonus" class="cube-field row">
+    <div class="num-field">
+      <div class="cube-level">Push</div>
+      <div id="pushBonus" class="cube-field row">
         <div class="col">
-          <div class="cube-btn cube-minus" onclick="handleClick('cube_bonus_minus');">-</div>
+          <div class="cube-btn cube-minus" onclick="handleClick('push_bonus_minus');">-</div>
         </div>
         <div class="value col"></div>
         <div class="col">
-          <div class="cube-btn cube-add" onclick="handleClick('cube_bonus_add');">+</div>
+          <div class="cube-btn cube-add" onclick="handleClick('push_bonus_add');">+</div>
         </div>
       </div>
     </div>
+    <div class="num-field">
+      <div class="cube-level">Collection</div>
+      <div id="collectionBonus" class="cube-field row">
+        <div class="col">
+          <div class="cube-btn cube-minus" onclick="handleClick('collection_bonus_minus');">-</div>
+        </div>
+        <div class="value col"></div>
+        <div class="col">
+          <div class="cube-btn cube-add" onclick="handleClick('collection_bonus_add');">+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scoring-section">
+    <div class="scoring-header">
+      <div>&nbsp;</div>
+      <div>Parked</div>
+    </div>
+    {{range $i := seq 3}}
+    <div>
+      <div class="team team-{{$i}} robot-field"></div>
+      <div id="endgameStatus{{$i}}" class="boolean robot-field" onclick="handleClick('park', {{$i}});">
+        <div class="value"></div>
+      </div>
+    </div>
+    {{end}}
   </div>
 </div>
 <div id="commitMatchScore">

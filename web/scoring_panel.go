@@ -114,20 +114,38 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 			}
 
 			switch command {
-			case "cube_add":
+			case "push_add":
+				if args.CubeIndex >= 1 && args.CubeIndex <= 5 {
+					score.PushCubes[args.CubeIndex-1] += 1
+					scoreChanged = true
+				}
+			case "push_minus":
+				if args.CubeIndex >= 1 && args.CubeIndex <= 5 && score.PushCubes[args.CubeIndex-1]-1 >= 0 {
+					score.PushCubes[args.CubeIndex-1] -= 1
+					scoreChanged = true
+				}
+			case "collection_add":
 				if args.CubeIndex >= 1 && args.CubeIndex <= 5 {
 					score.CollectionCubes[args.CubeIndex-1] += 1
 					scoreChanged = true
 				}
-			case "cube_minus":
+			case "collection_minus":
 				if args.CubeIndex >= 1 && args.CubeIndex <= 5 && score.CollectionCubes[args.CubeIndex-1]-1 >= 0 {
 					score.CollectionCubes[args.CubeIndex-1] -= 1
 					scoreChanged = true
 				}
-			case "cube_bonus_add":
+			case "push_bonus_add":
+				score.PushBonus += 1
+				scoreChanged = true
+			case "push_bonus_minus":
+				if score.PushBonus-1 >= 0 {
+					score.PushBonus -= 1
+					scoreChanged = true
+				}
+			case "collection_bonus_add":
 				score.CollectionBonus += 1
 				scoreChanged = true
-			case "cube_bonus_minus":
+			case "collection_bonus_minus":
 				if score.CollectionBonus-1 >= 0 {
 					score.CollectionBonus -= 1
 					scoreChanged = true

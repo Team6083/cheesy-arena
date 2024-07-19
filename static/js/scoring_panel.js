@@ -56,12 +56,18 @@ const handleRealtimeScore = function(data) {
     $(`#endgameStatus${i1}`).attr("data-value", parked);
   }
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 2; i++) {
     const i1 = i + 1;
-    $(`#cubes${i1}>.value`).text(score.Cubes[i]);
+    $(`#pushCubes${i1}>.value`).text(score.PushCubes[i]);
   }
 
-  $(`#cubeBonus>.value`).text(score.CubeBonus);
+  for (let i = 0; i < 5; i++) {
+    const i1 = i + 1;
+    $(`#collectionCubes${i1}>.value`).text(score.CollectionCubes[i]);
+  }
+
+  $(`#pushBonus>.value`).text(score.PushBonus);
+  $(`#collectionBonus>.value`).text(score.CollectionBonus);
 };
 
 // Handles an element click and sends the appropriate websocket message.
