@@ -137,7 +137,7 @@ html {
   justify-content: flex-end;
 }
 .score-notes {
-  width: 100px;
+  width: 170px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -152,12 +152,6 @@ html {
 }
 .note-splitter {
   margin: 0 -4px;
-}
-.score-lights {
-  width: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .amp-light {
   fill-opacity: 0.2;
@@ -651,4 +645,8 @@ html {
   display: none;
   font-family: "FuturaLTBold";
   line-height: 87px;
+}
+
+.push-span {
+  vertical-align: middle;
 }

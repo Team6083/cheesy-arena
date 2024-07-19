@@ -151,83 +151,23 @@ const handleMatchTime = function(data) {
 
 // Handles a websocket message to update the match score.
 const handleRealtimeScore = function(data) {
-  $(`#${redSide}ScoreNumber`).text(data.Red.ScoreSummary.Score - data.Red.ScoreSummary.StagePoints);
-  $(`#${blueSide}ScoreNumber`).text(data.Blue.ScoreSummary.Score - data.Blue.ScoreSummary.StagePoints);
+  $(`#${redSide}ScoreNumber`).text(data.Red.ScoreSummary.Score);
+  $(`#${blueSide}ScoreNumber`).text(data.Blue.ScoreSummary.Score);
 
-  $(`#${redSide}NoteNumerator`).text(data.Red.ScoreSummary.NumNotes);
-  $(`#${redSide}NoteDenominator`).text(data.Red.ScoreSummary.NumNotesGoal);
-  $(`#${blueSide}NoteNumerator`).text(data.Blue.ScoreSummary.NumNotes);
-  $(`#${blueSide}NoteDenominator`).text(data.Blue.ScoreSummary.NumNotesGoal);
-  if (currentMatch.Type === matchTypePlayoff) {
-    $(`#${redSide}NoteDenominator`).hide();
-    $(`#${blueSide}NoteDenominator`).hide();
-    $(".note-splitter").hide();
-  } else {
-    $(`#${redSide}NoteDenominator`).show();
-    $(`#${blueSide}NoteDenominator`).show();
-    $(".note-splitter").show();
+  for (let i = 0; i < 5; i++) {
+    $(`#${redSide}CubeLv` + i).text(data.Red.Score.Cubes[i]);
+    $(`#${blueSide}CubeLv` + i).text(data.Blue.Score.Cubes[i]);
   }
 
-  const redLightsDiv = $(`#${redSide}Lights`);
-  const redAmplifiedDiv = $(`#${redSide}Amplified`);
-  if (data.Red.AmplifiedTimeRemainingSec > 0 && !redAmplified) {
-    redAmplified = true;
-    redLightsDiv.transition({queue: false, opacity: 0}, amplifyFadeTimeMs, "linear", function() {
-      redLightsDiv.hide();
-      redAmplifiedDiv.show();
-      redAmplifiedDiv.transition({queue: false, opacity: 1}, amplifyFadeTimeMs, "linear");
-      $(`#${redSide}Amplified svg circle`).transition(
-        {queue: false, strokeDashoffset: 158}, data.Red.AmplifiedTimeRemainingSec * 1000 - amplifyFadeTimeMs, "linear"
-      );
-    });
-  } else if (data.Red.AmplifiedTimeRemainingSec === 0 && redAmplified) {
-    redAmplified = false;
-    setTimeout(function() {
-      redAmplifiedDiv.transition({queue: false, opacity: 0}, amplifyFadeTimeMs, "linear", function () {
-        $(`#${redSide}Amplified svg circle`).css("stroke-dashoffset", amplifyProgressStartOffset);
-        redAmplifiedDiv.hide();
-        redLightsDiv.show();
-        redLightsDiv.transition({queue: false, opacity: 1}, amplifyFadeTimeMs, "linear");
-      });
-    }, amplifyDwellTimeMs);
+  for (let i = 0; i < 2; i++) {
+    $(`#${redSide}PushZ` + i).text(data.Red.Score.Cubes[i]);
+    $(`#${blueSide}PushZ` + i).text(data.Blue.Score.Cubes[i]);
   }
-
-  const blueLightsDiv = $(`#${blueSide}Lights`);
-  const blueAmplifiedDiv = $(`#${blueSide}Amplified`);
-  if (data.Blue.AmplifiedTimeRemainingSec > 0 && !blueAmplified) {
-    blueAmplified = true;
-    blueLightsDiv.transition({queue: false, opacity: 0}, amplifyFadeTimeMs, "linear", function() {
-      blueLightsDiv.hide();
-      blueAmplifiedDiv.show();
-      blueAmplifiedDiv.transition({queue: false, opacity: 1}, amplifyFadeTimeMs, "linear");
-      $(`#${blueSide}Amplified svg circle`).transition(
-        {queue: false, strokeDashoffset: -158}, data.Blue.AmplifiedTimeRemainingSec * 1000 - amplifyFadeTimeMs, "linear"
-      );
-    });
-  } else if (data.Blue.AmplifiedTimeRemainingSec === 0 && blueAmplified) {
-    blueAmplified = false;
-    setTimeout(function() {
-      blueAmplifiedDiv.transition({queue: false, opacity: 0}, amplifyFadeTimeMs, "linear", function () {
-        $(`#${blueSide}Amplified svg circle`).css("stroke-dashoffset", "-" + amplifyProgressStartOffset);
-        blueAmplifiedDiv.hide();
-        blueLightsDiv.show();
-        blueLightsDiv.transition({queue: false, opacity: 1}, amplifyFadeTimeMs, "linear");
-      });
-    }, amplifyDwellTimeMs);
-  }
-
-  $(`#${redSide}Lights .amp-low`).attr("data-lit", data.Red.Score.AmpSpeaker.BankedAmpNotes >= 1);
-  $(`#${redSide}Lights .amp-high`).attr("data-lit", data.Red.Score.AmpSpeaker.BankedAmpNotes >= 2);
-  $(`#${redSide}Lights .amp-coop`).attr("data-lit", data.Red.Score.AmpSpeaker.CoopActivated);
-  $(`#${redSide}Amplified svg text`).text(data.Red.AmplifiedTimeRemainingSec);
-  $(`#${blueSide}Lights .amp-low`).attr("data-lit", data.Blue.Score.AmpSpeaker.BankedAmpNotes >= 1);
-  $(`#${blueSide}Lights .amp-high`).attr("data-lit", data.Blue.Score.AmpSpeaker.BankedAmpNotes >= 2);
-  $(`#${blueSide}Lights .amp-coop`).attr("data-lit", data.Blue.Score.AmpSpeaker.CoopActivated);
-  $(`#${blueSide}Amplified svg text`).text(data.Blue.AmplifiedTimeRemainingSec);
 };
 
 // Handles a websocket message to populate the final score data.
 const handleScorePosted = function(data) {
+  console.log(data);
   $(`#${redSide}FinalScore`).text(data.RedScoreSummary.Score);
   $(`#${redSide}FinalAlliance`).text("Alliance " + data.Match.PlayoffRedAlliance);
   setTeamInfo(redSide, 1, data.Match.Red1, data.RedCards, data.RedRankings);
@@ -238,23 +178,10 @@ const handleScorePosted = function(data) {
   } else {
     setTeamInfo(redSide, 4, 0, data.RedCards, data.RedRankings);
   }
-  $(`#${redSide}FinalLeavePoints`).text(data.RedScoreSummary.LeavePoints);
-  $(`#${redSide}FinalSpeakerPoints`).text(data.RedScoreSummary.SpeakerPoints);
-  $(`#${redSide}FinalAmpPoints`).text(data.RedScoreSummary.AmpPoints);
-  $(`#${redSide}FinalStagePoints`).text(data.RedScoreSummary.StagePoints);
+  $(`#${redSide}FinalPushPoints`).text(0);
+  $(`#${redSide}FinalCollectionPoints`).text(data.RedScoreSummary.CubePoints);
+  $(`#${redSide}FinalParkPoints`).text(data.RedScoreSummary.ParkPoints);
   $(`#${redSide}FinalFoulPoints`).text(data.RedScoreSummary.FoulPoints);
-  $(`#${redSide}FinalMelodyBonusRankingPoint`).html(
-    data.RedScoreSummary.MelodyBonusRankingPoint ? "&#x2714;" : "&#x2718;"
-  );
-  $(`#${redSide}FinalMelodyBonusRankingPoint`).attr(
-    "data-checked", data.RedScoreSummary.MelodyBonusRankingPoint
-  );
-  $(`#${redSide}FinalEnsembleBonusRankingPoint`).html(
-    data.RedScoreSummary.EnsembleBonusRankingPoint ? "&#x2714;" : "&#x2718;"
-  );
-  $(`#${redSide}FinalEnsembleBonusRankingPoint`).attr(
-    "data-checked", data.RedScoreSummary.EnsembleBonusRankingPoint
-  );
   $(`#${redSide}FinalRankingPoints`).html(data.RedRankingPoints);
   $(`#${redSide}FinalWins`).text(data.RedWins);
   const redFinalDestination = $(`#${redSide}FinalDestination`);
@@ -272,23 +199,10 @@ const handleScorePosted = function(data) {
   } else {
     setTeamInfo(blueSide, 4, 0, data.BlueCards, data.BlueRankings);
   }
-  $(`#${blueSide}FinalLeavePoints`).text(data.BlueScoreSummary.LeavePoints);
-  $(`#${blueSide}FinalSpeakerPoints`).text(data.BlueScoreSummary.SpeakerPoints);
-  $(`#${blueSide}FinalAmpPoints`).text(data.BlueScoreSummary.AmpPoints);
-  $(`#${blueSide}FinalStagePoints`).text(data.BlueScoreSummary.StagePoints);
+  $(`#${blueSide}FinalPushPoints`).text(0);
+  $(`#${blueSide}FinalCollectionPoints`).text(data.BlueScoreSummary.CubePoints);
+  $(`#${blueSide}FinalParkPoints`).text(data.BlueScoreSummary.ParkPoints);
   $(`#${blueSide}FinalFoulPoints`).text(data.BlueScoreSummary.FoulPoints);
-  $(`#${blueSide}FinalMelodyBonusRankingPoint`).html(
-    data.BlueScoreSummary.MelodyBonusRankingPoint ? "&#x2714;" : "&#x2718;"
-  );
-  $(`#${blueSide}FinalMelodyBonusRankingPoint`).attr(
-    "data-checked", data.BlueScoreSummary.MelodyBonusRankingPoint
-  );
-  $(`#${blueSide}FinalEnsembleBonusRankingPoint`).html(
-    data.BlueScoreSummary.EnsembleBonusRankingPoint ? "&#x2714;" : "&#x2718;"
-  );
-  $(`#${blueSide}FinalEnsembleBonusRankingPoint`).attr(
-    "data-checked", data.BlueScoreSummary.EnsembleBonusRankingPoint
-  );
   $(`#${blueSide}FinalRankingPoints`).html(data.BlueRankingPoints);
   $(`#${blueSide}FinalWins`).text(data.BlueWins);
   const blueFinalDestination = $(`#${blueSide}FinalDestination`);
