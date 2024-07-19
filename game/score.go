@@ -6,8 +6,10 @@
 package game
 
 type Score struct {
-	Cubes           [5]int
-	CubeBonus       int
+	CollectionCubes [5]int
+	CollectionBonus int
+	PushCubes       [2]int
+	PushBonus       int
 	EndgameStatuses [3]EndgameStatus
 	Fouls           []Foul
 	PlayoffDq       bool
@@ -35,13 +37,21 @@ func (score *Score) Summarize(opponentScore *Score) *ScoreSummary {
 		return summary
 	}
 
-	// Calculate Cube points.
-	summary.CubePoints = 0
-	for i, cube := range score.Cubes {
-		oneCube := 10 + 5*i
-		summary.CubePoints += oneCube * cube
+	// Calculate Push points.
+	summary.PushPoints = 0
+	for i, cubes := range score.PushCubes {
+		pointsPerCube := 1 + 1*i
+		summary.PushPoints += pointsPerCube * cubes
 	}
-	summary.CubePoints += 5 * score.CubeBonus
+	summary.PushPoints += 4 * score.PushBonus
+
+	// Calculate Collection points.
+	summary.CollectionPoints = 0
+	for i, cubes := range score.CollectionCubes {
+		pointsPerCube := 10 + 5*i
+		summary.CollectionPoints += pointsPerCube * cubes
+	}
+	summary.CollectionPoints += 5 * score.CollectionBonus
 
 	// Calculate endgame points.
 	for _, status := range score.EndgameStatuses {
@@ -52,7 +62,7 @@ func (score *Score) Summarize(opponentScore *Score) *ScoreSummary {
 		}
 	}
 
-	summary.MatchPoints = summary.CubePoints + summary.ParkPoints
+	summary.MatchPoints = summary.PushPoints + summary.CollectionPoints + summary.ParkPoints
 
 	// Calculate penalty points.
 	for _, foul := range opponentScore.Fouls {
@@ -70,11 +80,10 @@ func (score *Score) Summarize(opponentScore *Score) *ScoreSummary {
 
 // Returns true if and only if all fields of the two scores are equal.
 func (score *Score) Equals(other *Score) bool {
-	if score.CubeBonus != other.CubeBonus ||
+	if score.CollectionBonus != other.CollectionBonus ||
 		score.EndgameStatuses != other.EndgameStatuses ||
 		score.PlayoffDq != other.PlayoffDq ||
-		len(score.Fouls) != len(other.Fouls) ||
-		len(score.Cubes) != len(other.Cubes) {
+		len(score.Fouls) != len(other.Fouls) {
 		return false
 	}
 
@@ -84,8 +93,14 @@ func (score *Score) Equals(other *Score) bool {
 		}
 	}
 
-	for i, cube := range score.Cubes {
-		if cube != other.Cubes[i] {
+	for i, col := range score.CollectionCubes {
+		if col != other.CollectionCubes[i] {
+			return false
+		}
+	}
+
+	for i, push := range score.PushCubes {
+		if push != other.PushCubes[i] {
 			return false
 		}
 	}

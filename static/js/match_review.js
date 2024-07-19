@@ -31,15 +31,17 @@ const renderResults = function(alliance) {
   $("#" + alliance + "Score").html(scoreContent);
 
   // Set the values of the form fields from the JSON results data.
-  getInputElement(alliance, "CubeBonus").val(result.score.CubeBonus);
+  getInputElement(alliance, "PushBonus").val(result.score.PushBonus);
+  getInputElement(alliance, "CollectionBonus").val(result.score.CollectionBonus);
 
-  const cubes = result.score.Cubes ?? [];
+  const pushCubes = result.score.PushCubes;
   for (let i = 0; i < 5; i++) {
-    let tmp = cubes[i];
-    if (typeof tmp != "number") {
-      tmp = 0;
-    }
-    getInputElement(alliance, "CubeLv"+i).val(tmp)
+    getInputElement(alliance, "PushZ"+i).val(pushCubes[i])
+  }
+
+  const colCubes = result.score.CollectionCubes;
+  for (let i = 0; i < 5; i++) {
+    getInputElement(alliance, "CollectionLv"+i).val(colCubes[i])
   }
 
   for (let i = 0; i < 3; i++) {
@@ -71,13 +73,20 @@ const updateResults = function(alliance) {
     formData[v.name] = v.value;
   });
 
-  result.score.Cubes = []
+  result.score.PushCubes = []
   for (let i = 0; i < 5; i++) {
-    let cube = parseInt(formData[alliance + "CubeLv"+i]);
+    let cube = parseInt(formData[alliance + "PushZ"+i]);
     if (isNaN(cube)) cube = 0;
-    result.score.Cubes.push(cube)
+    result.score.PushCubes.push(cube)
   }
-  result.score.CubeBonus = parseInt(formData[alliance + "CubeBonus"])
+  result.score.CollectionCubes = []
+  for (let i = 0; i < 5; i++) {
+    let cube = parseInt(formData[alliance + "CollectionLv"+i]);
+    if (isNaN(cube)) cube = 0;
+    result.score.CollectionCubes.push(cube)
+  }
+  result.score.PushBonus = parseInt(formData[alliance + "PushBonus"])
+  result.score.CollectionBonus = parseInt(formData[alliance + "CollectionBonus"])
   result.score.EndgameStatuses = [];
   for (let i = 0; i < 3; i++) {
     const i1 = i + 1;

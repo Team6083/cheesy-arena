@@ -8,7 +8,8 @@ package game
 import "math/rand"
 
 type ScoreSummary struct {
-	CubePoints           int
+	PushPoints           int
+	CollectionPoints     int
 	ParkPoints           int
 	MatchPoints          int
 	FoulPoints           int

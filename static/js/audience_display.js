@@ -154,14 +154,14 @@ const handleRealtimeScore = function(data) {
   $(`#${redSide}ScoreNumber`).text(data.Red.ScoreSummary.Score);
   $(`#${blueSide}ScoreNumber`).text(data.Blue.ScoreSummary.Score);
 
-  for (let i = 0; i < 5; i++) {
-    $(`#${redSide}CubeLv` + i).text(data.Red.Score.Cubes[i]);
-    $(`#${blueSide}CubeLv` + i).text(data.Blue.Score.Cubes[i]);
+  for (let i = 0; i < 2; i++) {
+    $(`#${redSide}PushZ` + i).text(data.Red.Score.PushCubes[i]);
+    $(`#${blueSide}PushZ` + i).text(data.Blue.Score.PushCubes[i]);
   }
 
-  for (let i = 0; i < 2; i++) {
-    $(`#${redSide}PushZ` + i).text(data.Red.Score.Cubes[i]);
-    $(`#${blueSide}PushZ` + i).text(data.Blue.Score.Cubes[i]);
+  for (let i = 0; i < 5; i++) {
+    $(`#${redSide}CubeLv` + i).text(data.Red.Score.CollectionCubes[i]);
+    $(`#${blueSide}CubeLv` + i).text(data.Blue.Score.CollectionCubes[i]);
   }
 };
 
@@ -178,8 +178,8 @@ const handleScorePosted = function(data) {
   } else {
     setTeamInfo(redSide, 4, 0, data.RedCards, data.RedRankings);
   }
-  $(`#${redSide}FinalPushPoints`).text(0);
-  $(`#${redSide}FinalCollectionPoints`).text(data.RedScoreSummary.CubePoints);
+  $(`#${redSide}FinalPushPoints`).text(data.RedScoreSummary.PushPoints);
+  $(`#${redSide}FinalCollectionPoints`).text(data.RedScoreSummary.CollectionPoints);
   $(`#${redSide}FinalParkPoints`).text(data.RedScoreSummary.ParkPoints);
   $(`#${redSide}FinalFoulPoints`).text(data.RedScoreSummary.FoulPoints);
   $(`#${redSide}FinalRankingPoints`).html(data.RedRankingPoints);
@@ -199,8 +199,8 @@ const handleScorePosted = function(data) {
   } else {
     setTeamInfo(blueSide, 4, 0, data.BlueCards, data.BlueRankings);
   }
-  $(`#${blueSide}FinalPushPoints`).text(0);
-  $(`#${blueSide}FinalCollectionPoints`).text(data.BlueScoreSummary.CubePoints);
+  $(`#${blueSide}FinalPushPoints`).text(data.BlueScoreSummary.PushPoints);
+  $(`#${blueSide}FinalCollectionPoints`).text(data.BlueScoreSummary.CollectionPoints);
   $(`#${blueSide}FinalParkPoints`).text(data.BlueScoreSummary.ParkPoints);
   $(`#${blueSide}FinalFoulPoints`).text(data.BlueScoreSummary.FoulPoints);
   $(`#${blueSide}FinalRankingPoints`).html(data.BlueRankingPoints);
