@@ -47,7 +47,7 @@ func (score *Score) Summarize(opponentScore *Score) *ScoreSummary {
 	for _, status := range score.EndgameStatuses {
 		switch status {
 		case EndgameParked:
-			summary.ParkPoints += 1
+			summary.ParkPoints += 5
 		default:
 		}
 	}
