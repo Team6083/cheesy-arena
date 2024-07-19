@@ -17,12 +17,14 @@ type PlayoffTournament struct {
 	matchSpecs   []*matchSpec
 	breakSpecs   []breakSpec
 	finalMatchup *Matchup
+	triCycle     *TriCycle
 }
 
 // NewPlayoffTournament creates a new playoff tournament of the given type and number of alliances, or returns an error
 // if the number of alliances is invalid for the given tournament type.
 func NewPlayoffTournament(playoffType model.PlayoffType, numPlayoffAlliances int) (*PlayoffTournament, error) {
 	var finalMatchup *Matchup
+	var triCycle *TriCycle
 	var breakSpecs []breakSpec
 	var err error
 	switch playoffType {
@@ -30,6 +32,8 @@ func NewPlayoffTournament(playoffType model.PlayoffType, numPlayoffAlliances int
 		finalMatchup, breakSpecs, err = newDoubleEliminationBracket(numPlayoffAlliances)
 	case model.SingleEliminationPlayoff:
 		finalMatchup, breakSpecs, err = newSingleEliminationBracket(numPlayoffAlliances)
+	case model.SingleEliminationWithTriCyclePlayoff:
+		finalMatchup, triCycle, breakSpecs, err = newSingleEliminationWithTriCycleBracket(numPlayoffAlliances)
 	default:
 		err = fmt.Errorf("invalid playoff type: %v", playoffType)
 	}
@@ -46,14 +50,22 @@ func NewPlayoffTournament(playoffType model.PlayoffType, numPlayoffAlliances int
 		return nil, err
 	}
 
+	if triCycle != nil {
+		matchSpecs = append(matchSpecs, triCycle.MatchSpecs()...)
+	}
+
 	// Doubly link the match group tree in order to populate alliance destinations.
 	finalMatchup.setSourceDestinations()
 
 	// Trigger an initial update to populate the alliances.
 	finalMatchup.update(map[int]playoffMatchResult{})
+	if triCycle != nil {
+		triCycle.update(map[int]playoffMatchResult{})
+	}
 
 	return &PlayoffTournament{
 		finalMatchup: finalMatchup,
+		triCycle:     triCycle,
 		matchGroups:  matchGroups,
 		matchSpecs:   matchSpecs,
 		breakSpecs:   breakSpecs,
@@ -201,6 +213,7 @@ func (tournament *PlayoffTournament) UpdateMatches(database *model.Database) err
 	}
 
 	tournament.finalMatchup.update(playoffMatchResults)
+	tournament.triCycle.update(playoffMatchResults)
 
 	// Update all unplayed matches to assign any alliances that have been newly populated into or removed from matches.
 	matchesByTypeOrder := make(map[int]*model.Match)
