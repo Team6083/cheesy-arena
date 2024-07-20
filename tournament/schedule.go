@@ -77,17 +77,17 @@ func BuildRandomSchedule(
 		} else {
 			return nil, fmt.Errorf("invalid match type %q", matchType)
 		}
-		matches[i].Red1 = 9971
+		matches[i].Red1 = 0
 		matches[i].Red1IsSurrogate = true
 		matches[i].Red2 = teams[teamShuffle[anonMatch[2]-1]].Id
 		matches[i].Red2IsSurrogate = anonMatch[3] == 1
-		matches[i].Red3 = 9973
+		matches[i].Red3 = 0
 		matches[i].Red3IsSurrogate = true
-		matches[i].Blue1 = 9981
+		matches[i].Blue1 = 0
 		matches[i].Blue1IsSurrogate = true
 		matches[i].Blue2 = teams[teamShuffle[anonMatch[8]-1]].Id
 		matches[i].Blue2IsSurrogate = anonMatch[9] == 1
-		matches[i].Blue3 = 9983
+		matches[i].Blue3 = 0
 		matches[i].Blue3IsSurrogate = true
 		matches[i].TbaMatchKey.MatchNumber = i + 1
 	}
