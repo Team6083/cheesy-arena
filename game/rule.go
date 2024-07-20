@@ -18,11 +18,13 @@ var rules = []*Rule{
 	{1, "C05", false, false, "機器人上的零件不能分離"},
 	{2, "C05", true, false, "機器人上的零件不能分離"},
 	{3, "C07", true, false, "不得接觸敵方機器人超過 3 秒"},
-	{4, "C10", true, false, "每台機器人至多控制 3 個場地物件, 超過三秒視為犯規"},
-	{5, "C11", true, false, "只能用指定姿勢將物件丟進場地內"},
-	{6, "C12", true, false, "不得使用任意方式阻擋比賽進行"},
-	{7, "C13", true, false, "不得進入對方的 Parking"},
-	{8, "C14", true, false, "不得故意擋在對方的 Collection 前面, 超過五秒視為犯規"},
+	{4, "C10", true, false, "每台機器人至多控制 3 個場地物件，超過三秒視為犯規"},
+	{5, "C11", true, false, "Human Player 只能用指定姿勢將物件丟進場地內"},
+	{6, "C12", true, false, "場地物件不得噴射進入 Collection"},
+	{7, "C13", true, false, "不得使用任意方式阻擋比賽進行"},
+	{8, "C14", true, false, "不得進入對方的 Parking"},
+	{9, "C15", true, false, "不得故意擋在對方的 Collection 前面，超過五秒視為犯規"},
+	{10, "C17", true, false, "End Game 時間內，不得改變對方 Push Zone 內得分裝態"},
 }
 var ruleMap map[int]*Rule
 
