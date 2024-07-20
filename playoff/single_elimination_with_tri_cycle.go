@@ -84,8 +84,16 @@ func newSingleEliminationWithTriCycleBracket(numAlliances int) (*Matchup, []brea
 
 	// Define scheduled breaks.
 	var breakSpecs []breakSpec
-	breakSpecs = append(breakSpecs, breakSpec{50, 480, "Field Break"})
-	breakSpecs = append(breakSpecs, breakSpec{51, 480, "Field Break"})
+
+	breakSpecs = append(breakSpecs, breakSpec{39, 600, "Field Break"})
+	breakSpecs = append(breakSpecs, breakSpec{41, 600, "Field Break"})
+
+	for i := 0; i < 5; i++ {
+		breakSpecs = append(breakSpecs, breakSpec{44 + i, 600, "Field Break"})
+	}
+
+	breakSpecs = append(breakSpecs, breakSpec{50, 600, "Field Break"})
+	breakSpecs = append(breakSpecs, breakSpec{51, 600, "Field Break"})
 
 	return &final, breakSpecs, nil
 }
