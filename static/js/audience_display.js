@@ -119,7 +119,7 @@ const handleMatchLoad = function(data) {
     $(".playoff-alliance").show();
 
     // Show the series status if this playoff round isn't just a single match.
-    if (data.Matchup.NumWinsToAdvance > 1) {
+    if (data.Matchup && data.Matchup.NumWinsToAdvance > 1) {
       $(`#${redSide}PlayoffAllianceWins`).text(data.Matchup.RedAllianceWins);
       $(`#${blueSide}PlayoffAllianceWins`).text(data.Matchup.BlueAllianceWins);
       $("#playoffSeriesStatus").css("display", "flex");
